@@ -21,8 +21,8 @@ def profile(request, shortname):
     tasks = Person.objects.get(shortname = shortname).tasks.all()
     form = TaskForm(request.POST or None)
 
-    if request.method == "POST" and form.is_valid():
-        check_values = request.POST.getlist('checks')
+    if request.method == "POST":
+        check_values = request.POST.getlist('task')
 
         for check in check_values:
             task = person.tasks.get(id = check)
@@ -32,7 +32,7 @@ def profile(request, shortname):
 
         message = messages.success(request, 'after the check')
         # return HttpResponseRedirect(reverse('views.profile', args=(shortname)))
-        return render(request, 'app/profile.html', {'message': messages})
+        # return render(request, 'app/profile.html', {'message': messages})
 
     elif request.method == "POST":
         return messages.success(request, 'Request was post but task did not get marked')
