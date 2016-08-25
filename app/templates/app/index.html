@@ -1,0 +1,124 @@
+{% load staticfiles %}
+<html>
+<head>
+  <!-- import materialize -->
+  <link type="text/css" rel="stylesheet" href="{% static 'app/css/materialize.css' %}" />
+  <!-- some lovely icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- odd styling -->
+  <link type="text/css" rel="stylesheet" href="{% static 'app/css/app.css' %}" />
+  <!-- such favicon -->
+  <link rel="shortcut icon" type="image/png" href="{% static 'app/img/favicon.png' %}"/>
+</head>
+<body>
+
+  <ul id="dropdown1" class="dropdown-content">
+    {% for person in people %}
+    <li><a href="/{{ person.shortname }}">{{ person }}</a></li>
+    {% endfor %}
+  </ul>
+
+  <nav class="cyan" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="http://localhost:8000/" class="brand-logo">Status</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Choose a person<i class="material-icons right">arrow_drop_down</i></a>
+        </li>
+        <li><a class="btn waves-effect waves-light red lighten-2" type="submit" name="action" href="/admin/app/person/add/">New</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+{% block content %}
+{% endblock %}
+
+<!-- <div class="section no-pad-bot" id="index-banner">
+<div class="container">
+<br><br>
+<h1 class="header center orange-text">{{ person }}</h1> -->
+
+<!-- <div class="row">
+<div class="col s12 m6">
+<div class="card blue-grey darken-1">
+<div class="card-content white-text">
+<span class="card-title">Card Title</span>
+<p>I am a very simple card. I am good at containing small bits of information.
+I am convenient because I require little markup to use effectively.</p>
+</div>
+<div class="card-action">
+<a href="#">This is a link</a>
+<a href="#">This is a link</a>
+</div>
+</div>
+</div>
+</div> -->
+
+<!-- <div class="row center">
+<h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+</div>
+<div class="row center">
+<a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
+</div>
+<br><br>
+
+</div>
+</div> -->
+
+
+<!-- <div class="container">
+<div class="section">
+
+<div class="row">
+<div class="col s12 m4">
+<div class="icon-block">
+<h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
+<h5 class="center">Speeds up development</h5>
+
+<p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+</div>
+</div>
+
+<div class="col s12 m4">
+<div class="icon-block">
+<h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+<h5 class="center">User Experience Focused</h5>
+
+<p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+</div>
+</div>
+
+<div class="col s12 m4">
+<div class="icon-block">
+<h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
+<h5 class="center">Easy to work with</h5>
+
+<p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+</div>
+</div>
+</div>
+
+</div>
+<br><br>
+<div class="section">
+</div>
+</div> -->
+
+<!-- <footer class="page-footer orange">
+<div class="container">
+<div class="row">
+</div>
+</div>
+<div class="footer-copyright">
+<div class="container">
+<a href="mailto:rshimada@csc.com">@rshimada</a>
+</div>
+</div>
+</footer> -->
+
+<!--Import jQuery before materialize.js-->
+{% block footer %}
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="{% static 'app/js/materialize.js' %}"></script>
+{% endblock %}
+</body>
+</html>

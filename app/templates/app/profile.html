@@ -1,0 +1,63 @@
+{% extends "app/index.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">{{ person }}</span>
+      <p>Shortname: {{ shortname }}</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">Pending</span>
+
+      <form action="/" method="POST">
+        {% csrf_token %}
+        {% for task in tasks %}
+        {% if not task.complete %}
+        <input type="checkbox" name="task" id="{{ task.id }}" value="{{ task.id }}" />
+        <label for="{{ task.id }}">{{ task }}</label><br />
+        {% endif %}
+        {% endfor %}
+        <br />
+        <input type="submit" value="save">
+        <a class="red lighten-1 waves-effect waves-light btn" type="submit" value="Save" id="save_button">Save</a>
+      </form>
+
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">Completed</span>
+      <form action="" method="post">
+        {% csrf_token %}
+        {% for task in tasks %}
+        {% if task.complete %}
+        <input type="checkbox" name="task" id="{{ task.id }}" value="{{ task.id }}" checked/>
+        <label for="{{ task.id }}">{{ task }}</label><br />
+        {% endif %}
+        {% endfor %}
+        <!-- <br>
+        <a class="red lighten-1 waves-effect waves-light btn" type="submit" value="Save" >Save</a> -->
+      </form>
+
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
