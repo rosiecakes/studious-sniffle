@@ -30,10 +30,6 @@ def profile(request, shortname):
             task.save()
             message = messages.success(request, 'Task marked complete')
 
-        message = messages.success(request, 'after the check')
-        # return HttpResponseRedirect(reverse('views.profile', args=(shortname)))
-        # return render(request, 'app/profile.html', {'message': messages})
-
     elif request.method == "POST":
         return messages.success(request, 'Request was post but task did not get marked')
 
