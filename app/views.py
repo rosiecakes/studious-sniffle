@@ -1,11 +1,11 @@
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse
 from django.template import loader
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 
-from app.models import Person, Task
-from app.forms import TaskForm
+from app.models import Person, Task, Assignment
+from app.forms import AssignmentForm
 
 
 def index(request):
@@ -15,23 +15,21 @@ def index(request):
 
 
 @require_http_methods(["GET", "POST"])
-def profile(request, shortname):
+def profile(request, shortname=None):
     people = Person.objects.order_by('startdate')
-    person = Person.objects.get(shortname = shortname)
-    tasks = Person.objects.get(shortname = shortname).tasks.all()
-    form = TaskForm(request.POST or None)
+    person = get_object_or_404(Person, shortname=shortname)
+    tasks = Assignment.objects.filter(person=person)
+
+    form = AssignmentForm(request.POST or None)
 
     if request.method == "POST":
         check_values = request.POST.getlist('task')
 
         for check in check_values:
-            task = person.tasks.get(id = check)
+            task = Assignment.objects.get(id=check)
             task.complete = True
             task.save()
-            message = messages.success(request, 'Task marked complete')
-
-    elif request.method == "POST":
-        return messages.success(request, 'Request was post but task did not get marked')
+            messages.success(request, 'Task marked complete')
 
     context = {'shortname': shortname,
                 'people': people,

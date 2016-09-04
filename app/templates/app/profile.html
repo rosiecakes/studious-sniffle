@@ -1,56 +1,185 @@
 {% extends "app/index.html" %}
+{% load staticfiles %}
 
 {% block content %}
 <div class="container">
-  <div class="card">
-    <div class="card-content">
-      <span class="card-title">{{ person }}</span>
-      <p>Shortname: {{ shortname }}</p>
+
+  <div class="row">
+    <div class="col s3 m3">
+      <div class="card">
+        <div class="card-image">
+              <img style="height:293" src="{% static 'app/img/card-bg-1.jpg' %}">
+            </div>
+      </div>
+    </div>
+
+    <div class="col s12 m9">
+      <div class="card">
+        <div class="card-content center">
+          <span class="card-title red-text">
+            <h2 class="header">{{ person }}</h2>
+          </span>
+          <div class="row">
+            <div class="chip">
+              <p class="card-item">{{ shortname }}</p>
+              Shortname
+            </div>
+            <div class="chip">
+              <p class="card-item">{{ person.startdate }}</p>
+              Start date
+            </div>
+            <div class="chip">
+              <p class="card-item">UNIX</p>
+              Capability
+            </div>
+            <div class="chip">
+              <p class="card-item">iBUILD</p>
+              Team
+            </div>
+          </div>
+          <div class="row">
+            <div class="chip">
+              <p class="card-item">No</p>
+              KITE
+            </div>
+            <div class="chip">
+              <p class="card-item">Yes</p>
+              Remote
+            </div>
+            <div class="chip">
+              <p class="card-item">Yes</p>
+              CSC Transfer
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- <div class="card">
+    <div class="card-content center">
+      <span class="card-title red-text">
+        <h2 class="header">{{ person }}</h2>
+      </span>
+      <div class="row">
+        <div class="chip">
+          <p class="card-item">{{ shortname }}</p>
+          Shortname
+        </div>
+        <div class="chip">
+          <p class="card-item">{{ person.startdate }}</p>
+          Start date
+        </div>
+        <div class="chip">
+          <p class="card-item">UNIX</p>
+          Capability
+        </div>
+        <div class="chip">
+          <p class="card-item">iBUILD</p>
+          Team
+        </div>
+      </div>
+      <div class="row">
+        <div class="chip">
+          <p class="card-item">No</p>
+          KITE
+        </div>
+        <div class="chip">
+          <p class="card-item">Yes</p>
+          Remote
+        </div>
+        <div class="chip">
+          <p class="card-item">Yes</p>
+          CSC Transfer
+        </div>
+      </div>
+    </div>
+  </div> -->
+
   <div class="card">
     <div class="card-content">
-      <span class="card-title">Pending</span>
-
-      <form action="" method="POST">
-        {% csrf_token %}
-        {% for task in tasks %}
-        {% if not task.complete %}
-        <input type="checkbox" name="task" id="{{ task.id }}" value="{{ task.id }}" />
-        <label for="{{ task.id }}">{{ task }}</label><br />
-        {% endif %}
-        {% endfor %}
-        <br />
-        <input type="submit" value="save" class="red btn waves-light">
-      </form>
-
-      {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-        <!-- <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li> -->
-          <li{% if message.tags %} class="message {{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-
+      <table class="responsive-table highlight">
+        <thead>
+          <tr>
+            <th>Work</th>
+            <th></th>
+            <th>Personal</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cell-label">Email</td>
+            <td>
+              <a href="mailto:{{ shortname }}@csc.com">{{ shortname }}@csc.com</a>
+            </td>
+            <td class="cell-label">Email:</td>
+            <td>home@home.com</td>
+          </tr>
+          <tr>
+            <td class="cell-label">Phone:</td>
+            <td>(999) 000-9999</td>
+            <td class="cell-label">Phone:</td>
+            <td>(999) 111-2222</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  <div class="card">
-    <div class="card-content">
-      <span class="card-title">Completed</span>
-      <form action="" method="post">
-        {% csrf_token %}
-        {% for task in tasks %}
-        {% if task.complete %}
-        <input type="checkbox" name="task" id="{{ task.id }}" value="{{ task.id }}" checked/>
-        <label for="{{ task.id }}">{{ task }}</label><br />
-        {% endif %}
-        {% endfor %}
-        <!-- <br>
-        <a class="red lighten-1 waves-effect waves-light btn" type="submit" value="Save" >Save</a> -->
-      </form>
 
+  <div class="row">
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Pending
+            <i class="right small material-icons">face</i>
+          </span>
+
+          <form action="" method="POST">
+            {% csrf_token %}
+            {% for task in tasks %}
+            {% if not task.complete %}
+            <input type="checkbox" name="task" id="{{ task.id }}" value="{{ task.id }}" />
+            <label class="teal-text text-darken-4" for="{{ task.id }}">{{ task }}</label><br />
+            {% endif %}
+            {% endfor %}
+            <br />
+            <input type="submit" value="done" class="teal btn waves-light">
+          </form>
+
+          {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="message {{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Completed
+            <i class="right small material-icons">insert_emoticon</i>
+          </span>
+            <form action="" method="post">
+              {% csrf_token %}
+              {% for task in tasks %}
+              {% if task.complete %}
+              <input type="checkbox" name="task" id="{{ task.id }}" value="{{ task.id }}" checked/>
+              <label class="gray-text" for="{{ task.id }}">{{ task }}</label><br />
+              {% endif %}
+              {% endfor %}
+              <!-- <br>
+              <a class="red lighten-1 waves-effect waves-light btn" type="submit" value="Save" >Save</a> -->
+            </form>
+
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-{% endblock %}
+  {% endblock %}

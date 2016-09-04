@@ -1,10 +1,9 @@
 from django import forms
-from app.models import Task
+from django.forms import ModelForm
+from app.models import Task, Assignment
 
 
-class TaskForm(forms.Form):
-    complete = forms.BooleanField(required=False)
-    tasks = Task.objects.all()
-
+class AssignmentForm(ModelForm):
     class Meta:
-        model = Task
+        model = Assignment
+        fields = ['person', 'task', 'complete']

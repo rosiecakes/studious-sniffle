@@ -18,107 +18,110 @@
     {% endfor %}
   </ul>
 
-  <nav class="cyan" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="http://localhost:8000/" class="brand-logo">Status</a>
+  <nav class="pink" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="http://localhost:8000/" class="brand-logo">STATUS</a>
       <ul class="right hide-on-med-and-down">
-        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Choose a person<i class="material-icons right">arrow_drop_down</i></a>
+        <li>
+          <a class="dropdown-button" href="#!" data-activates="dropdown1">
+            Choose a person
+            <i class="material-icons right">arrow_drop_down</i>
+          </a>
         </li>
-        <li><a class="btn waves-effect waves-light red lighten-2" type="submit" name="action" href="/admin/app/person/add/">New</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+        <li>
+          <a class="btn waves-effect waves-light teal" type="submit" name="action" href="/admin/app/person/add/">New</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-{% block content %}
-{% endblock %}
+  {% block content %}
 
-<!-- <div class="section no-pad-bot" id="index-banner">
-<div class="container">
-<br><br>
-<h1 class="header center orange-text">{{ person }}</h1> -->
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">Recent</span>
+        <ul id="collection1" class="collection">
+          {% for person in people %}
+          <li><a href="/{{ person.shortname }}" class="collection-item">{{ person }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
 
-<!-- <div class="row">
-<div class="col s12 m6">
-<div class="card blue-grey darken-1">
-<div class="card-content white-text">
-<span class="card-title">Card Title</span>
-<p>I am a very simple card. I am good at containing small bits of information.
-I am convenient because I require little markup to use effectively.</p>
-</div>
-<div class="card-action">
-<a href="#">This is a link</a>
-<a href="#">This is a link</a>
-</div>
-</div>
-</div>
-</div> -->
+    <div class="section no-pad-bot" id="index-banner">
+      <h1 class="header-main center pink-text text-lighten-3">welcome</h1>
+      <h5 class="subheader center"><i class="material-icons">favorite_border</i></h5>
+      <div class="row center">
+        <h5 class="header col s12 light">
+          Choose a person to get their information and see pending onboarding items. To add a new person to track, hit the new button.</h5>
+        </div>
 
-<!-- <div class="row center">
-<h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
-</div>
-<div class="row center">
-<a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
-</div>
-<br><br>
+        <div class="section center">
+          <div class="row">
+            <div class="col s12 m4">
+              <div class="icon-block">
+                <h2 class="center teal-text text-lighten-2"><i class="material-icons">add_circle_outline</i></h2>
+                <h5 class="center">Please</h5>
+                <p class="light">Be sure to type everything properly when adding a new user.</p>
+              </div>
+            </div>
 
-</div>
-</div> -->
+            <div class="col s12 m4">
+              <div class="icon-block">
+                <h2 class="center teal-text text-lighten-2"><i class="material-icons">insert_emoticon</i></h2>
+                <h5 class="center">Note</h5>
 
+                <p class="light">Still in development. Some stuff doesn't work, like undoing a done item - please be patient.</p>
+              </div>
+            </div>
 
-<!-- <div class="container">
-<div class="section">
+            <div class="col s12 m4">
+              <div class="icon-block">
+                <h2 class="center teal-text text-lighten-2"><i class="material-icons">mail_outline</i></h2>
+                <h5 class="center">Broken?</h5>
 
-<div class="row">
-<div class="col s12 m4">
-<div class="icon-block">
-<h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
-<h5 class="center">Speeds up development</h5>
+                <p class="light">If something breaks please let me know via email, contact is at bottom.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
-</div>
-</div>
+  {% endblock %}
 
-<div class="col s12 m4">
-<div class="icon-block">
-<h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-<h5 class="center">User Experience Focused</h5>
+  <footer class="page-footer pink">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Such Footer</h5>
+          <p class="footer-light grey-text text-lighten-1">Built with Django and Materialize CSS</p>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Handy</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Wow</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        Made by <a class="pink-text text-lighten-3" href="mailto:rshimada@csc.com">@rshimada</a>
+      </div>
+    </div>
+  </footer>
 
-<p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
-</div>
-</div>
-
-<div class="col s12 m4">
-<div class="icon-block">
-<h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
-<h5 class="center">Easy to work with</h5>
-
-<p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
-</div>
-</div>
-</div>
-
-</div>
-<br><br>
-<div class="section">
-</div>
-</div> -->
-
-<!-- <footer class="page-footer orange">
-<div class="container">
-<div class="row">
-</div>
-</div>
-<div class="footer-copyright">
-<div class="container">
-<a href="mailto:rshimada@csc.com">@rshimada</a>
-</div>
-</div>
-</footer> -->
-
-<!--Import jQuery before materialize.js-->
-{% block footer %}
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-<script type="text/javascript" src="{% static 'app/js/materialize.js' %}"></script>
-{% endblock %}
+  <!--Import jQuery before materialize.js-->
+  {% block footer %}
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+  <script type="text/javascript" src="{% static 'app/js/materialize.js' %}"></script>
+  {% endblock %}
 </body>
 </html>
