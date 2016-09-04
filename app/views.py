@@ -4,6 +4,8 @@ from django.template import loader
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 
+import random
+
 from app.models import Person, Task, Assignment
 from app.forms import AssignmentForm
 
@@ -19,7 +21,7 @@ def profile(request, shortname=None):
     people = Person.objects.order_by('startdate')
     person = get_object_or_404(Person, shortname=shortname)
     tasks = Assignment.objects.filter(person=person)
-
+    randimg = random.randint(1, 6)
     form = AssignmentForm(request.POST or None)
 
     if request.method == "POST":
@@ -36,6 +38,7 @@ def profile(request, shortname=None):
                 'person': person,
                 'tasks': tasks,
                 'form': form,
-                'message': messages}
+                'message': messages,
+                'randimg': randimg}
 
     return render(request, 'app/profile.html', context)
