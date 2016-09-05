@@ -1,1 +1,6 @@
-Django
+Babel==2.3.4
+Django==1.10
+django-materialize-css==0.0.1
+django-phonenumber-field==1.1.0
+phonenumberslite==7.5.2
+pytz==2016.6.1

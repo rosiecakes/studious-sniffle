@@ -1,29 +1,40 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 
 from app.models import Person, Task, Assignment
+from app.forms import AssignmentForm
 
 
-admin.site.register(Task)
+def assign_all(modeladmin, request, queryset):
+    for person in queryset:
+        tasks = Task.objects.all()
+        for task in tasks:
+            assignment = Assignment(person=person, task=task)
+            assignment.save()
+
+    messages.success(request, 'All tasks assigned')
 
 
-# class AssignmentInline(admin.StackedInline):
-#     model = Assignment
+assign_all.short_description = "Assign all tasks"
 
 class PersonAdmin(admin.ModelAdmin):
+    actions = [assign_all]
+    readonly_fields = ('addeddate',)
+
     fieldsets = (
         ('General Information', {
-            'fields': ('firstname', 'lastname', 'shortname', 'startdate', 'workemail', 'employtype')
+            'fields': ('firstname', 'lastname', 'shortname', 'startdate', 'employtype', 'employid')
         }),
-        ('Tasks:', {
+        ('Contact Information', {
+            'fields': ('personalemail', 'personalphone', 'workphone')
+        }),
+        ('Pod Information', {
+            'fields': ('capability', 'team', 'kite', 'remote', 'csctransfer', 'tokenserial')
+        }),
+        ('Other', {
             'classes': ('collapse',),
-            'fields': ('lastname',),
+            'fields': ('capability',),
         }),
     )
-
-    # inlines = [AssignmentInline]
-
-
-admin.site.register(Person, PersonAdmin)
 
 
 def mark_complete(modeladmin, request, queryset):
@@ -48,3 +59,5 @@ class AssignmentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Assignment, AssignmentAdmin)
+admin.site.register(Person, PersonAdmin)
+admin.site.register(Task)
