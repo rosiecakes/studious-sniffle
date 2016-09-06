@@ -35,7 +35,7 @@ def profile(request, shortname=None):
     tasks = Assignment.objects.filter(person=person)
     form = AssignmentForm(request.POST or None)
 
-    randimg = random.randint(1, 15)
+    randimg = random.randint(1, 20)
 
     if request.method == "POST":
         check_values = request.POST.getlist('task')
@@ -44,7 +44,7 @@ def profile(request, shortname=None):
             task = Assignment.objects.get(id=check)
             task.complete = True
             task.save()
-            messages.success(request, 'Task marked complete')
+            messages.success(request, 'Task(s) marked complete')
 
     context = {'shortname': shortname,
                 'people': people,
