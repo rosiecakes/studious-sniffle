@@ -71,3 +71,7 @@ td {
 .card-image {
   max-height: 300px;
 }
+
+label {
+  margin: 0 0 4px 0;
+}

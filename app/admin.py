@@ -7,11 +7,13 @@ from app.forms import AssignmentForm
 def assign_all(modeladmin, request, queryset):
     for person in queryset:
         tasks = Task.objects.all()
+        count = 0
         for task in tasks:
-            assignment = Assignment(person=person, task=task)
-            assignment.save()
+            obj, created = Assignment.objects.get_or_create(person=person, task=task)
+            if created:
+                count += 1
 
-    messages.success(request, 'All tasks assigned')
+    messages.success(request, '{} tasks assigned successfully.'.format(count))
 
 
 assign_all.short_description = "Assign all tasks"
@@ -25,7 +27,7 @@ class PersonAdmin(admin.ModelAdmin):
             'fields': ('firstname', 'lastname', 'shortname', 'startdate', 'employtype', 'employid')
         }),
         ('Contact Information', {
-            'fields': ('personalemail', 'personalphone', 'workphone')
+            'fields': ('personalemail', 'personalphone', 'personalcity', 'personalstate', 'workphone', 'workcity', 'workstate')
         }),
         ('Pod Information', {
             'fields': ('capability', 'team', 'kite', 'remote', 'csctransfer', 'tokenserial')

@@ -6,11 +6,11 @@ from django.contrib import messages
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-
 import random
 
 from app.models import Person, Task, Assignment
 from app.forms import AssignmentForm
+from app.admin import assign_all
 
 
 @receiver(post_save, sender=Person)
@@ -18,8 +18,7 @@ def my_handler(sender, **kwargs):
     person = Person.objects.latest('addeddate')
     tasks = Task.objects.all()
     for task in tasks:
-        assignment = Assignment(person=person, task=task)
-        assignment.save()
+        obj, created = Assignment.objects.get_or_create(person=person, task=task)
 
 
 def index(request):

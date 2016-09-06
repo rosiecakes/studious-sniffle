@@ -39,10 +39,10 @@ class Person(models.Model):
 
     personalstreet = models.CharField(max_length=50, blank=True, verbose_name='Home street address')
     personalcity = models.CharField(max_length=50, verbose_name='Home city', default='Hartford')
-    personalstate = models.CharField(max_length=50, verbose_name='Home state', default='CT')
+    personalstate = models.CharField(max_length=50, verbose_name='Home state (abbreviation)', default='CT')
     personalzip = models.CharField(max_length=5, blank=True, verbose_name='Home zip code')
     personalemail = models.EmailField(max_length=50, blank=True, verbose_name='Personal email address')
-    personalphone = PhoneNumberField(blank=True, verbose_name='Personal phone number')
+    personalphone = PhoneNumberField(blank=True, verbose_name='Personal phone number, format: +1 860 888 6060')
 
     workphone = PhoneNumberField(blank=True, verbose_name='Work phone number')
     workstreet = models.CharField(max_length=50, blank=True, verbose_name='Work street address')
