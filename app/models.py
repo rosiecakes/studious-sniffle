@@ -72,6 +72,7 @@ class Person(models.Model):
 class Assignment(models.Model):
     person = models.ForeignKey(Person)
     task = models.ForeignKey(Task)
+    comment = models.CharField(max_length=200, blank=True)
     complete = models.BooleanField(default=False)
 
     def __str__(self):

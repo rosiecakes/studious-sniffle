@@ -48,7 +48,7 @@ mark_incomplete.short_description = "Mark selected tasks incomplete"
 
 class AssignmentAdmin(admin.ModelAdmin):
     model = Assignment
-    list_display = ['task', 'person', 'complete']
+    list_display = ['task', 'person', 'comment', 'complete']
     actions = [mark_complete, mark_incomplete]
 
     def person(self, obj):

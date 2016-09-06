@@ -108,17 +108,24 @@
         <div class="card-content">
           <span class="card-title">Pending
             <i class="right small material-icons">face</i>
+            <h6 class="subheader">(Hover over bolded items for comments)</h6>
           </span>
           <form action="" method="POST">
             {% csrf_token %}
             {% for task in tasks %}
             {% if not task.complete %}
             <input type="checkbox" name="task" id="{{ task.id }}" value="{{ task.id }}" />
+            {% if task.comment %}
+            <label class="teal-text text-darken-4 tooltipped" for="{{ task.id }}" data-tooltip="{{ task.comment }}"><strong>{{ task }}</strong></label><br />
+            {% endif %}
+            {% if not task.comment %}
             <label class="teal-text text-darken-4" for="{{ task.id }}">{{ task }}</label><br />
+            {% endif %}
             {% endif %}
             {% endfor %}
             <br />
             <input type="submit" value="mark done" class="teal btn waves-light">
+            <a class="btn waves-effect waves-light teal" type="submit" name="action" href="/admin/app/assignment/">Add Comment</a>
           </form>
           {% if messages %}
           <ul class="messages">
@@ -142,7 +149,12 @@
             {% for task in tasks %}
             {% if task.complete %}
             <input type="checkbox" name="task" id="{{ task.id }}" value="{{ task.id }}" checked disabled="disabled"/>
+            {% if task.comment %}
+            <label class="gray-text tooltipped" for="{{ task.id }}" data-tooltip="{{ task.comment }}"><strong>{{ task }}</strong></label><br />
+            {% endif %}
+            {% if not task.comment %}
             <label class="gray-text" for="{{ task.id }}">{{ task }}</label><br />
+            {% endif %}
             {% endif %}
             {% endfor %}
           </form>
