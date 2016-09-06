@@ -10,7 +10,6 @@ import random
 
 from app.models import Person, Task, Assignment
 from app.forms import AssignmentForm
-from app.admin import assign_all
 
 
 @receiver(post_save, sender=Person)
