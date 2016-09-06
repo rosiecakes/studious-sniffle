@@ -32,10 +32,10 @@ class PersonAdmin(admin.ModelAdmin):
         ('Pod Information', {
             'fields': ('capability', 'team', 'kite', 'remote', 'csctransfer', 'tokenserial')
         }),
-        ('Other', {
-            'classes': ('collapse',),
-            'fields': ('capability',),
-        }),
+        # ('Other', {
+        #     'classes': ('collapse',),
+        #     'fields': ('capability',),
+        # }),
     )
 
 

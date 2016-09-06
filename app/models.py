@@ -16,12 +16,12 @@ class Person(models.Model):
         ('CDS', 'CDS'),
         ('VDS', 'VDS'),
         ('PCC', 'PCC'),
-        ('VM', 'Virtualization'),
-        ('AD', 'Active Directory'),
-        ('BAC', 'Backup'),
-        ('STO', 'Storage'),
-        ('UNX', 'UNIX'),
-        ('WIN', 'Wintel'))
+        ('Virtualization', 'Virtualization'),
+        ('Active Directory', 'Active Directory'),
+        ('Backup', 'Backup'),
+        ('Storage', 'Storage'),
+        ('UNIX', 'UNIX'),
+        ('Wintel', 'Wintel'))
     TEAM_CHOICES = (
         ('iACTION', 'iACTION'),
         ('iBUILD', 'iBUILD'),
