@@ -64,7 +64,13 @@
               <p class="card-item">Yes</p>
               {% endif %}
               CSC Transfer
+            </div>  
+            {% if person.cscid %}
+            <div class="chip">
+            <p class="card-item">{{ person.cscid }}</p>
+            UTC ID
             </div>
+            {% endif %}
           </div>
         </div>
       </div>

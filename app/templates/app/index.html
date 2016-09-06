@@ -56,7 +56,7 @@
           <div class="card-content">
             <span class="card-title">Recent Additions</span>
             <ul id="collection1" class="collection">
-              {% for person in people|slice:":5" %}
+              {% for person in people|slice:":6" %}
               <li><a href="/{{ person.shortname }}" class="collection-item">{{ person }}</a></li>
               {% endfor %}
             </ul>
