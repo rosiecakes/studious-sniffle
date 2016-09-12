@@ -28,7 +28,7 @@ def index(request):
 
 @require_http_methods(["GET", "POST"])
 def profile(request, shortname=None):
-    people = Person.objects.order_by('addeddate')
+    people = Person.objects.order_by('-addeddate')
     person = get_object_or_404(Person, shortname=shortname)
     assignments = Assignment.objects.filter(person=person)
     randimg = random.randint(1, 20)
