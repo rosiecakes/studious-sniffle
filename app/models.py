@@ -2,33 +2,47 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 
+CAPABILITY_CHOICES = (
+    ('ADS', 'ADS'),
+    ('CDS', 'CDS'),
+    ('VDS', 'VDS'),
+    ('PCC', 'PCC'),
+    ('Virtualization', 'Virtualization'),
+    ('Active Directory', 'Active Directory'),
+    ('Backup', 'Backup'),
+    ('Storage', 'Storage'),
+    ('Tech Writer', 'Tech Writer'),
+    ('UNIX', 'UNIX'),
+    ('Wintel', 'Wintel'))
+
 class Task(models.Model):
+    BU_CHOICES = (
+        ('CSC', 'CSC'),
+        ('All UTC', 'All UTC'),
+        ('CORP', 'Corp'),
+        ('CCS', 'CCS (Carrier/FS)'),
+        ('OTIS', 'Otis'),
+        ('PW', 'P&W'),
+        ('SIK', 'Sik'),
+        ('UTAS', 'UTAS'),
+        ('UTRC', 'UTRC'))
+
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=600, blank=True)
     stage = models.CharField(max_length=2, blank=True)
     predecessor = models.ManyToManyField("self", symmetrical=False, blank=True)
-    vpnrequired = models.BooleanField(default=False)
+    vpnrequired = models.BooleanField(default=False, verbose_name='VPN required for this')
+    capability = models.CharField(max_length=20, choices=CAPABILITY_CHOICES, blank=True)
+    division = models.CharField(max_length=20, choices=BU_CHOICES, blank=True)
 
     class Meta:
-        ordering = ['stage', 'id']
+        ordering = ['title', 'stage', 'id']
 
     def __str__(self):
         return '{0}'.format(self.title)
 
 
 class Person(models.Model):
-    CAPABILITY_CHOICES = (
-        ('ADS', 'ADS'),
-        ('CDS', 'CDS'),
-        ('VDS', 'VDS'),
-        ('PCC', 'PCC'),
-        ('Virtualization', 'Virtualization'),
-        ('Active Directory', 'Active Directory'),
-        ('Backup', 'Backup'),
-        ('Storage', 'Storage'),
-        ('Tech Writer', 'Tech Writer'),
-        ('UNIX', 'UNIX'),
-        ('Wintel', 'Wintel'))
     TEAM_CHOICES = (
         ('iACTION', 'iACTION'),
         ('iBUILD', 'iBUILD'),
@@ -86,6 +100,9 @@ class Assignment(models.Model):
     task = models.ForeignKey(Task)
     comment = models.CharField(max_length=200, blank=True)
     complete = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['task']
 
     def __str__(self):
         return self.task.title

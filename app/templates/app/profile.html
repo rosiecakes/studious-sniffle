@@ -78,12 +78,21 @@
             <i class="right small material-icons">sentiment_neutral</i>
           </span>
 
+          <div class="row">
+              <div class="col s12">
+                <ul class="tabs">
+                  <li class="tab col s3"><a class="active" href="#csc_tasks">CSC</a></li>
+                  <li class="tab col s3"><a href="#utc_tasks">UTC</a></li>
+                </ul>
+              </div>
+              <div id="csc_tasks" class="col s12">
+
           <form action="" method="POST">
             {% csrf_token %}
               <ul class="collapsible" data-collapsible="accordion">
                 {% spaceless %}
                 {% for assignment in assignments %}
-                {% if assignment.task.stage == "1" and not assignment.complete %}
+                {% if assignment.task.stage == "1" and not assignment.complete and assignment.task.division == "CSC" %}
                 <li>
                   <div class="collapsible-header">
                     <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" />
@@ -110,7 +119,7 @@
               <ul class="collapsible" data-collapsible="accordion">
                 {% spaceless %}
                 {% for assignment in assignments %}
-                {% if assignment.task.stage == "2" and not assignment.complete %}
+                {% if assignment.task.stage == "2" and not assignment.complete and assignment.task.division == "CSC" %}
                 <li>
                   <div class="collapsible-header">
                     <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" />
@@ -137,7 +146,7 @@
               <ul class="collapsible" data-collapsible="accordion">
                 {% spaceless %}
                 {% for assignment in assignments %}
-                {% if assignment.task.stage == "3" and not assignment.complete %}
+                {% if assignment.task.stage == "3" and not assignment.complete and assignment.task.division == "CSC" %}
                 <li>
                   <div class="collapsible-header">
                     <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" />
@@ -163,6 +172,124 @@
 
             <br /><input type="submit" value="mark done" class="teal btn waves-light">
           </form>
+
+            </div>
+            <div id="utc_tasks" class="col s12">
+              <form action="" method="POST">
+                {% csrf_token %}
+                  <ul class="collapsible" data-collapsible="accordion">
+                    {% spaceless %}
+                    {% for assignment in assignments %}
+                    {% if assignment.task.stage == "1" and not assignment.complete and not assignment.task.division == "CSC" %}
+                    <li>
+                      <div class="collapsible-header">
+                        <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" />
+                        <label class="deep-orange-text {% if assignment.comment %}tooltipped{% endif %}" for="{{ assignment.id }}" {% if assignment.comment %}data-tooltip="{{ assignment.comment }}"{% endif %}>
+                          {% if assignment.comment %}<strong>{% endif %}
+                            {{ assignment }}
+                          {% if assignment.comment %}</strong>{% endif %}
+                        </label>
+                        {% if assignment.task.predecessor.all %}
+                        <span class="new badge">{{ assignment.task.predecessor.all.count }}</span>
+                        {% endif %}
+                      </div>
+                      <div class="collapsible-body">
+                        {% for task in assignment.task.predecessor.all %}
+                        <p>{{ task }}</p>
+                        {% endfor %}
+                      </div>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% endspaceless %}
+                  </ul>
+
+                  <ul class="collapsible" data-collapsible="accordion">
+                    {% spaceless %}
+                    {% for assignment in assignments %}
+                    {% if assignment.task.stage == "2" and not assignment.complete and not assignment.task.division == "CSC" %}
+                    <li>
+                      <div class="collapsible-header">
+                        <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" />
+                        <label class="cyan-text {% if assignment.comment %}tooltipped{% endif %}" for="{{ assignment.id }}" {% if assignment.comment %}data-tooltip="{{ assignment.comment }}"{% endif %}>
+                          {% if assignment.comment %}<strong>{% endif %}
+                            {{ assignment }}
+                          {% if assignment.comment %}</strong>{% endif %}
+                        </label>
+                        {% if assignment.task.predecessor.all %}
+                        <span class="new badge">{{ assignment.task.predecessor.all.count }}</span>
+                        {% endif %}
+                      </div>
+                      <div class="collapsible-body">
+                        {% for task in assignment.task.predecessor.all %}
+                        <p>{{ task }}</p>
+                        {% endfor %}
+                      </div>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% endspaceless %}
+                  </ul>
+
+                  <ul class="collapsible" data-collapsible="accordion">
+                    {% spaceless %}
+                    {% for assignment in assignments %}
+                    {% if assignment.task.stage == "3" and not assignment.complete and assignment.task.division == "All UTC" %}
+                    <li>
+                      <div class="collapsible-header">
+                        <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" />
+                        <label class="deep-purple-text {% if assignment.comment %}tooltipped{% endif %}" for="{{ assignment.id }}" {% if assignment.comment %}data-tooltip="{{ assignment.comment }}"{% endif %}>
+                          {% if assignment.comment %}<strong>{% endif %}
+                            {{ assignment }}
+                          {% if assignment.comment %}</strong>{% endif %}
+                        </label>
+                        {% if assignment.task.predecessor.all %}
+                        <span class="new badge">{{ assignment.task.predecessor.all.count }}</span>
+                        {% endif %}
+                      </div>
+                      <div class="collapsible-body">
+                        {% for task in assignment.task.predecessor.all %}
+                        <p>{{ task }}</p>
+                        {% endfor %}
+                      </div>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% endspaceless %}
+                  </ul>
+
+                  <span>Business-unit specific</span>
+                  <ul class="collapsible" data-collapsible="accordion">
+                    {% spaceless %}
+                    {% for assignment in assignments %}
+                    {% if assignment.task.stage == "3" and assignment.task.division != "CSC" and assignment.task.division != "All UTC" %}
+                    <li>
+                      <div class="collapsible-header">
+                        <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" />
+                        <label class="deep-purple-text {% if assignment.comment %}tooltipped{% endif %}" for="{{ assignment.id }}" {% if assignment.comment %}data-tooltip="{{ assignment.comment }}"{% endif %}>
+                          {% if assignment.comment %}<strong>{% endif %}
+                            {{ assignment }}
+                          {% if assignment.comment %}</strong>{% endif %}
+                        </label>
+                        {% if assignment.task.predecessor.all %}
+                        <span class="new badge">{{ assignment.task.predecessor.all.count }}</span>
+                        {% endif %}
+                      </div>
+                      <div class="collapsible-body">
+                        {% for task in assignment.task.predecessor.all %}
+                        <p>{{ task }}</p>
+                        {% endfor %}
+                      </div>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% endspaceless %}
+                  </ul>
+
+                  <br /><input type="submit" value="mark done" class="teal btn waves-light">
+                </form>
+                </div>
+          </div>
 
           {% if messages %}
           <ul class="messages">

@@ -56,8 +56,8 @@ class AssignmentAdmin(admin.ModelAdmin):
 
 class TaskAdmin(admin.ModelAdmin):
     model = Task
-    list_display = ['id', 'title', 'stage', 'predecessor_count', 'vpnrequired']
-    list_editable = ['title', 'stage', 'vpnrequired']
+    list_display = ['id', 'title', 'stage', 'predecessor_count', 'capability', 'division', 'vpnrequired']
+    list_editable = ['title', 'stage', 'capability', 'division', 'vpnrequired']
     list_display_links = ['id']
 
     def predecessor_count(self, obj):

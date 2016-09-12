@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.db.models import Q
 
 import random
 
@@ -15,7 +16,8 @@ from app.forms import AssignmentForm
 @receiver(post_save, sender=Person)
 def my_handler(sender, **kwargs):
     person = Person.objects.latest('addeddate')
-    tasks = Task.objects.all()
+    tasks = Task.objects.all().filter(Q(division='All UTC') | Q(division='CSC') | Q(capability=person.capability))
+
     for task in tasks:
         obj, created = Assignment.objects.get_or_create(person=person, task=task)
 
