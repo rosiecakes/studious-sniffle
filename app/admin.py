@@ -1,7 +1,6 @@
 from django.contrib import admin, messages
 
 from app.models import Person, Task, Assignment
-from app.forms import AssignmentForm
 
 
 def assign_all(modeladmin, request, queryset):
@@ -15,8 +14,17 @@ def assign_all(modeladmin, request, queryset):
 
     messages.success(request, '{} tasks assigned successfully.'.format(count))
 
+def mark_complete(modeladmin, request, queryset):
+    queryset.update(complete=True)
+
+def mark_incomplete(modeladmin, request, queryset):
+    queryset.update(complete=False)
+
 
 assign_all.short_description = "Assign all tasks"
+mark_complete.short_description = "Mark selected tasks complete"
+mark_incomplete.short_description = "Mark selected tasks incomplete"
+
 
 class PersonAdmin(admin.ModelAdmin):
     actions = [assign_all]
@@ -31,22 +39,8 @@ class PersonAdmin(admin.ModelAdmin):
         }),
         ('Pod Information', {
             'fields': ('capability', 'team', 'kite', 'remote', 'csctransfer', 'tokenserial')
-        }),
-        # ('Other', {
-        #     'classes': ('collapse',),
-        #     'fields': ('capability',),
-        # }),
-    )
+        }))
 
-
-def mark_complete(modeladmin, request, queryset):
-    queryset.update(complete=True)
-
-def mark_incomplete(modeladmin, request, queryset):
-    queryset.update(complete=False)
-
-mark_complete.short_description = "Mark selected tasks complete"
-mark_incomplete.short_description = "Mark selected tasks incomplete"
 
 class AssignmentAdmin(admin.ModelAdmin):
     model = Assignment
@@ -60,6 +54,16 @@ class AssignmentAdmin(admin.ModelAdmin):
         return obj.task
 
 
+class TaskAdmin(admin.ModelAdmin):
+    model = Task
+    list_display = ['id', 'title', 'stage', 'predecessor_count', 'vpnrequired']
+    list_editable = ['title', 'stage', 'vpnrequired']
+    list_display_links = ['id']
+
+    def predecessor_count(self, obj):
+        return obj.predecessor.count()
+
+
 admin.site.register(Assignment, AssignmentAdmin)
 admin.site.register(Person, PersonAdmin)
-admin.site.register(Task)
+admin.site.register(Task, TaskAdmin)

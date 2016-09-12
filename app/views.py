@@ -30,13 +30,12 @@ def index(request):
 def profile(request, shortname=None):
     people = Person.objects.order_by('startdate')
     person = get_object_or_404(Person, shortname=shortname)
-    tasks = Assignment.objects.filter(person=person)
+    assignments = Assignment.objects.filter(person=person)
+    randimg = random.randint(1, 20)
     form = AssignmentForm(request.POST or None)
 
-    randimg = random.randint(1, 20)
-
     if request.method == "POST":
-        check_values = request.POST.getlist('task')
+        check_values = request.POST.getlist('assignment')
 
         for check in check_values:
             task = Assignment.objects.get(id=check)
@@ -47,7 +46,7 @@ def profile(request, shortname=None):
     context = {'shortname': shortname,
                 'people': people,
                 'person': person,
-                'tasks': tasks,
+                'assignments': assignments,
                 'form': form,
                 'message': messages,
                 'randimg': randimg}

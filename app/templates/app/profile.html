@@ -4,8 +4,9 @@
 {% block content %}
 <div class="container">
   <div class="row">
+
 <!-- CAT GENERATOR -->
-    <div class="col s12 m3 l3">
+    <div class="col l3 hide-on-med-and-down">
       <div class="card">
         <div class="card-image waves-effect waves-block waves-light">
           <a href="/{{ shortname }}">
@@ -15,8 +16,8 @@
     </div>
 
 <!-- PERSON MAIN -->
-    <div class="col s12 m9 l9">
-      <div class="card">
+    <div class="col s12 l9">
+      <div class="card profile-card">
         <div class="card-content center">
           <span class="card-title red-text">
             <a class="red-text" href="/{{ shortname }}">
@@ -64,7 +65,7 @@
               <p class="card-item">Yes</p>
               {% endif %}
               CSC Transfer
-            </div>  
+            </div>
             {% if person.cscid %}
             <div class="chip">
             <p class="card-item">{{ person.cscid }}</p>
@@ -77,63 +78,95 @@
     </div>
   </div>
 
-<!-- PERSON CONTACT -->
-  <div class="card">
-    <div class="card-content">
-      <table class="responsive-table highlight">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>City</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="cell-label">Work</td>
-            <td><a href="mailto:{{ shortname }}@csc.com">{{ shortname }}@csc.com</a></td>
-            <td>{{ person.workphone }}</td>
-            <td>{{ person.workcity }}, {{ person.workstate }}</td>
-          </tr>
-          <tr>
-            <td class="cell-label">Personal</td>
-            <td><a href="mailto:{{ person.personalemail }}">{{ person.personalemail }}</a></td>
-            <td>{{ person.personalphone }}</td>
-            <td>{{ person.personalcity }}, {{ person.personalstate }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
 <!-- PENDING ITEMS -->
   <div class="row">
-    <div class="col s12 m6">
+    <div class="col s12 l6">
       <div class="card">
-        <div class="card-content">
+        <div class="card-content grey lighten-5">
           <span class="card-title">Pending
-            <i class="right small material-icons">face</i>
-            <h6 class="subheader">(Hover over bolded items for comments)</h6>
+            <i class="right small material-icons">sentiment_neutral</i>
           </span>
+
           <form action="" method="POST">
             {% csrf_token %}
-            {% for task in tasks %}
-            {% if not task.complete %}
-            <input type="checkbox" name="task" id="{{ task.id }}" value="{{ task.id }}" />
-            {% if task.comment %}
-            <label class="teal-text text-darken-4 tooltipped" for="{{ task.id }}" data-tooltip="{{ task.comment }}"><strong>{{ task }}</strong></label><br />
-            {% endif %}
-            {% if not task.comment %}
-            <label class="teal-text text-darken-4" for="{{ task.id }}">{{ task }}</label><br />
-            {% endif %}
-            {% endif %}
-            {% endfor %}
-            <br />
-            <input type="submit" value="mark done" class="teal btn waves-light">
-            <a target="_blank" class="btn waves-effect waves-light white teal-text" type="submit" name="action" href="/admin/app/assignment/">
-              Add Note</a>
+              <ul class="collapsible" data-collapsible="accordion">
+                {% for assignment in assignments %}
+                {% if assignment.task.stage == "1" and not assignment.complete %}
+                <li>
+                  <div class="collapsible-header">
+                    <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" />
+                    <label class="deep-orange-text {% if assignment.comment %}tooltipped{% endif %}" for="{{ assignment.id }}" {% if assignment.comment %}data-tooltip="{{ assignment.comment }}"{% endif %}>
+                      {% if assignment.comment %}<strong>{% endif %}
+                        {{ assignment }}
+                      {% if assignment.comment %}</strong>{% endif %}
+                    </label>
+                    {% if assignment.task.predecessor.all %}
+                    <span class="new badge">{{ assignment.task.predecessor.all.count }}</span>
+                    {% endif %}
+                  </div>
+                  <div class="collapsible-body">
+                    {% for task in assignment.task.predecessor.all %}
+                    <p>{{ task }}</p>
+                    {% endfor %}
+                  </div>
+                </li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+
+              <ul class="collapsible" data-collapsible="accordion">
+                {% for assignment in assignments %}
+                {% if assignment.task.stage == "2" and not assignment.complete %}
+                <li>
+                  <div class="collapsible-header">
+                    <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" />
+                    <label class="cyan-text {% if assignment.comment %}tooltipped{% endif %}" for="{{ assignment.id }}" {% if assignment.comment %}data-tooltip="{{ assignment.comment }}"{% endif %}>
+                      {% if assignment.comment %}<strong>{% endif %}
+                        {{ assignment }}
+                      {% if assignment.comment %}</strong>{% endif %}
+                    </label>
+                    {% if assignment.task.predecessor.all %}
+                    <span class="new badge">{{ assignment.task.predecessor.all.count }}</span>
+                    {% endif %}
+                  </div>
+                  <div class="collapsible-body">
+                    {% for task in assignment.task.predecessor.all %}
+                    <p>{{ task }}</p>
+                    {% endfor %}
+                  </div>
+                </li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+
+              <ul class="collapsible" data-collapsible="accordion">
+                {% for assignment in assignments %}
+                {% if assignment.task.stage == "3" and not assignment.complete %}
+                <li>
+                  <div class="collapsible-header">
+                    <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" />
+                    <label class="deep-purple-text {% if assignment.comment %}tooltipped{% endif %}" for="{{ assignment.id }}" {% if assignment.comment %}data-tooltip="{{ assignment.comment }}"{% endif %}>
+                      {% if assignment.comment %}<strong>{% endif %}
+                        {{ assignment }}
+                      {% if assignment.comment %}</strong>{% endif %}
+                    </label>
+                    {% if assignment.task.predecessor.all %}
+                    <span class="new badge">{{ assignment.task.predecessor.all.count }}</span>
+                    {% endif %}
+                  </div>
+                  <div class="collapsible-body">
+                    {% for task in assignment.task.predecessor.all %}
+                    <p>{{ task }}</p>
+                    {% endfor %}
+                  </div>
+                </li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+
+            <br /><input type="submit" value="mark done" class="teal btn waves-light">
           </form>
+
           {% if messages %}
           <ul class="messages">
             {% for message in messages %}
@@ -144,23 +177,63 @@
         </div>
       </div>
     </div>
-<!-- COMPLETED ITEMS -->
-    <div class="col s12 m6">
+
+<!-- LEGEND -->
+    <div class="col s12 l6">
       <div class="card">
-        <div class="card-content">
+        <div class="card-content teal">
+          <span class="card-title white-text">Legend
+            <i class="right small material-icons">color_lens</i>
+          </span>
+          <div class="card-content grey lighten-5">
+            <table id="legend">
+              <col style="width:10%">
+              <col style="width:90%">
+              <tbody>
+                <tr>
+                  <td><i class="material-icons teal-text">looks_one</i></td>
+                  <td>Expand to see pre-requisites</td>
+                </tr>
+                <tr>
+                  <td><i class="material-icons deep-orange-text">indeterminate_check_box</i></td>
+                  <td>Can be completed before or soon after start date</td>
+                </tr>
+                <tr>
+                  <td><i class="material-icons cyan-text">indeterminate_check_box</i></td>
+                  <td>Can be completed after new hire starts</td>
+                </tr>
+                <tr>
+                  <td><i class="material-icons deep-purple-text">indeterminate_check_box</i></td>
+                  <td>One or more pre-requisites - complete last</td>
+                </tr>
+                <tr>
+                  <td><strong><i class="material-icons black-text">format_bold</i></strong></td>
+                  <td>Bold items have comments, hover to see</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- COMPLETED ITEMS -->
+    <div class="col s12 l6">
+      <div class="card">
+        <div class="card-content grey lighten-4">
           <span class="card-title">Completed
-            <i class="right small material-icons">insert_emoticon</i>
+            <i class="right small material-icons">sentiment_very_satisfied</i>
           </span>
           <form action="" method="post">
             {% csrf_token %}
-            {% for task in tasks %}
-            {% if task.complete %}
-            <input type="checkbox" name="task" id="{{ task.id }}" value="{{ task.id }}" checked disabled="disabled"/>
-            {% if task.comment %}
-            <label class="gray-text tooltipped" for="{{ task.id }}" data-tooltip="{{ task.comment }}"><strong>{{ task }}</strong></label><br />
+            {% for assignment in assignments %}
+            {% if assignment.complete %}
+            <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" checked disabled="disabled"/>
+            {% if assignment.comment %}
+            <label class="gray-text tooltipped" for="{{ assignment.id }}" data-tooltip="{{ assignment.comment }}"><strong>{{ assignment }}</strong></label><br />
             {% endif %}
-            {% if not task.comment %}
-            <label class="gray-text" for="{{ task.id }}">{{ task }}</label><br />
+            {% if not assignment.comment %}
+            <label class="gray-text" for="{{ assignment.id }}">{{ assignment }}</label><br />
             {% endif %}
             {% endif %}
             {% endfor %}
@@ -170,19 +243,53 @@
     </div>
   </div>
 
+<!-- PERSON CONTACT -->
+  <div class="col s12 l6">
+    <div class="card profile-card">
+      <div class="card-content">
+        <table class="responsive-table highlight">
+          <thead>
+            <tr>
+              <th>Contact</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>City</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="cell-label">Work</td>
+              <td><a href="mailto:{{ shortname }}@csc.com">{{ shortname }}@csc.com</a></td>
+              <td>{{ person.workphone }}</td>
+              <td>{{ person.workcity }}, {{ person.workstate }}</td>
+            </tr>
+            <tr>
+              <td class="cell-label">Personal</td>
+              <td><a href="mailto:{{ person.personalemail }}">{{ person.personalemail }}</a></td>
+              <td>{{ person.personalphone }}</td>
+              <td>{{ person.personalcity }}, {{ person.personalstate }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
 <!-- MISC NUMBERS -->
-  <div class="card" style="background-color: #F5F5F5">
-    <div class="card-content">
-      <table class="responsive-table highlight">
-        <tbody>
-          <tr>
-            <td class="cell-label">Employee number</td>
-            <td class="td-bold">{{ person.employid }}</td>
-            <td class="cell-label">Token number</td>
-            <td class="td-bold">{{ person.tokenserial }}</td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="col s12">
+    <div class="card profile-card">
+      <div class="card-content">
+        <table class="responsive-table highlight">
+          <tbody>
+            <tr>
+              <td class="cell-label">Employee number</td>
+              <td class="td-bold">{{ person.employid }}</td>
+              <td class="cell-label">Token number</td>
+              <td class="td-bold">{{ person.tokenserial }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

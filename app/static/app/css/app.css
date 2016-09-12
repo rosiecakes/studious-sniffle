@@ -75,3 +75,47 @@ td {
 label {
   margin: 0 0 4px 0;
 }
+
+tr.tight {
+  padding: 0;
+}
+
+#legend td, #legend tr {
+  padding: 0;
+}
+
+.profile-card {
+  background-color: #F5F5F5;
+}
+
+.collapsible, .collapsible.popout > li.active, .collapsible.popout > li {
+  box-shadow: none !important;
+  border-top: 1px solid #eee;
+  border-right: 1px solid #eee;
+  border-left: 1px solid #eee;
+  transition: none;
+}
+
+.collapsible-header {
+  padding: 0.8rem 1rem 0.3rem 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.collapsible-header.active {
+  border-bottom: 0px solid #fff;
+  box-shadow: none;
+}
+
+.collapsible-body p {
+  padding: 0.5rem 1rem 0.5rem 3rem;
+}
+
+span.badge {
+  right: 30px;
+  line-height: 20px;
+  min-width: 2rem;
+}
+
+span.badge.new:after {
+  content: "";
+}

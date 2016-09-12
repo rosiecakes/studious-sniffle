@@ -5,6 +5,12 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Task(models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=600, blank=True)
+    stage = models.CharField(max_length=2, blank=True)
+    predecessor = models.ManyToManyField("self", symmetrical=False, blank=True)
+    vpnrequired = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['stage', 'id']
 
     def __str__(self):
         return '{0}'.format(self.title)
