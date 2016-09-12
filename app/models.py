@@ -48,8 +48,8 @@ class Person(models.Model):
     addeddate = models.DateTimeField(auto_now_add=True, verbose_name='Date added to status app')
 
     personalstreet = models.CharField(max_length=50, blank=True, verbose_name='Home street address')
-    personalcity = models.CharField(max_length=50, blank=True, verbose_name='Home city', default='Hartford')
-    personalstate = models.CharField(max_length=50, blank=True, verbose_name='Home state (abbreviation)', default='CT')
+    personalcity = models.CharField(max_length=50, blank=True, verbose_name='Home city')
+    personalstate = models.CharField(max_length=50, blank=True, verbose_name='Home state (abbreviation)')
     personalzip = models.CharField(max_length=5, blank=True, verbose_name='Home zip code')
     personalemail = models.EmailField(max_length=50, blank=True, verbose_name='Personal email address')
     personalphone = PhoneNumberField(blank=True, verbose_name='Personal phone number, format: +1 860 888 6060')
