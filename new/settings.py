@@ -120,3 +120,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/home/rosiecakes/studious-sniffle/app/static'
+STATICFILES_DIRS = [
+        '/home/rosiecakes/.virtualenvs/new/lib/python3.5/site-packages/django/contrib/admin/static/',
+        ]
