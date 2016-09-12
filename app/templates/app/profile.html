@@ -4,7 +4,6 @@
 {% block content %}
 <div class="container">
   <div class="row">
-
 <!-- CAT GENERATOR -->
     <div class="col l3 hide-on-med-and-down">
       <div class="card">
@@ -43,35 +42,23 @@
           </div>
           <div class="row">
             <div class="chip">
-              {% if not person.kite %}
-              <p class="card-item">No</p>
-              {% else %}
-              <p class="card-item">Yes</p>
-              {% endif %}
+              {% if not person.kite %}<p class="card-item">No</p>
+              {% else %}<p class="card-item">Yes</p>{% endif %}
               KITE
             </div>
             <div class="chip">
-              {% if not person.remote %}
-              <p class="card-item">No</p>
-              {% else %}
-              <p class="card-item">Yes</p>
-              {% endif %}
+              {% if not person.remote %}<p class="card-item">No</p>
+              {% else %}<p class="card-item">Yes</p>{% endif %}
               Remote
             </div>
             <div class="chip">
-              {% if not person.csctransfer %}
-              <p class="card-item">No</p>
-              {% else %}
-              <p class="card-item">Yes</p>
-              {% endif %}
+              {% if not person.csctransfer %}<p class="card-item">No</p>
+              {% else %}<p class="card-item">Yes</p>{% endif %}
               CSC Transfer
             </div>
-            {% if person.cscid %}
-            <div class="chip">
+            {% if person.cscid %}<div class="chip">
             <p class="card-item">{{ person.cscid }}</p>
-            UTC ID
-            </div>
-            {% endif %}
+            UTC ID</div>{% endif %}
           </div>
         </div>
       </div>
@@ -90,6 +77,7 @@
           <form action="" method="POST">
             {% csrf_token %}
               <ul class="collapsible" data-collapsible="accordion">
+                {% spaceless %}
                 {% for assignment in assignments %}
                 {% if assignment.task.stage == "1" and not assignment.complete %}
                 <li>
@@ -112,9 +100,11 @@
                 </li>
                 {% endif %}
                 {% endfor %}
+                {% endspaceless %}
               </ul>
 
               <ul class="collapsible" data-collapsible="accordion">
+                {% spaceless %}
                 {% for assignment in assignments %}
                 {% if assignment.task.stage == "2" and not assignment.complete %}
                 <li>
@@ -137,9 +127,11 @@
                 </li>
                 {% endif %}
                 {% endfor %}
+                {% endspaceless %}
               </ul>
 
               <ul class="collapsible" data-collapsible="accordion">
+                {% spaceless %}
                 {% for assignment in assignments %}
                 {% if assignment.task.stage == "3" and not assignment.complete %}
                 <li>
@@ -162,6 +154,7 @@
                 </li>
                 {% endif %}
                 {% endfor %}
+                {% endspaceless %}
               </ul>
 
             <br /><input type="submit" value="mark done" class="teal btn waves-light">
@@ -226,6 +219,7 @@
           </span>
           <form action="" method="post">
             {% csrf_token %}
+            {% spaceless %}
             {% for assignment in assignments %}
             {% if assignment.complete %}
             <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" checked disabled="disabled"/>
@@ -237,6 +231,7 @@
             {% endif %}
             {% endif %}
             {% endfor %}
+            {% endspaceless %}
           </form>
         </div>
       </div>

@@ -1,52 +1,63 @@
 {% load staticfiles %}
 <html>
-<head>
+<head
+<!-- OHAI
+               \||/
+                |  ^___..
+      /\  /\   / (__,,,,|
+     ) /^\) ^\/ _)
+     )   /^\/   _)
+     )   _ /  / _)
+ /\  )/\/ ||  | )_)
+{  }      |(,,) )__)
+ ||      /    \)___)\
+ | \____(      )___) )___
+ \______(_______;;; __;;;
+-->
+
   <!-- import materialize -->
-  <link type="text/css" rel="stylesheet" href="{% static 'app/css/materialize.css' %}" />
+  <link type="text/css" rel="stylesheet" href="{% static 'app/css/materialize.css' %}"/>
+
   <!-- some lovely icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+
   <!-- odd styling -->
-  <link type="text/css" rel="stylesheet" href="{% static 'app/css/app.css' %}" />
+  <link type="text/css" rel="stylesheet" href="{% static 'app/css/app.css' %}"/>
+
   <!-- such favicon -->
   <link rel="shortcut icon" type="image/png" href="{% static 'app/img/favicon.png' %}"/>
+
 </head>
 <body>
 
 <!-- ITEMS FOR NAV -->
-  <ul id="dropdown1" class="dropdown-content">
-    {% for person in people %}
-    <li><a href="/{{ person.shortname }}">{{ person }}</a></li>
-    {% endfor %}
-  </ul>
+<ul id="dropdown1" class="dropdown-content">
+  {% for person in people %}
+  <li><a href="/{{ person.shortname }}">{{ person }}</a></li>
+  {% endfor %}
+</ul>
 
 <!-- NAV -->
-  <nav class="pink" role="navigation">
-    <div class="nav-wrapper container">
-      <a id="logo-container" href="/" class="brand-logo hide-on-med-and-down">STATUS</a>
-      <ul class="right">
-        <li>
-          <a class="dropdown-button" href="#!" data-activates="dropdown1">
-            Choose a person
-            <i class="material-icons right">arrow_drop_down</i>
-          </a>
-        </li>
-        <li>
-          <a target="_blank" class="btn waves-effect waves-light teal" type="submit" name="action" href="/admin/app/person/add/">Add</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-
-  {% block content %}
-
-<!-- WELCOME JUNK -->
+<nav class="pink" role="navigation">
+  <div class="nav-wrapper container">
+    <a id="logo-container" href="/" class="brand-logo hide-on-med-and-down">STATUS</a>
+    <ul class="right">
+      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Choose a person<i class="material-icons right">arrow_drop_down</i></a></li>
+      <li><a target="_blank" class="btn waves-effect waves-light teal" type="submit" name="action" href="/admin/app/person/add/">Add</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+{% block content %}
   <div class="container">
     <div class="section no-pad-bot" id="index-banner">
+<!-- WELCOME STUFFS -->
       <h1 class="header-main center pink-text text-lighten-3">welcome</h1>
-      <h5 class="subheader center"><i class="material-icons">favorite_border</i></h5>
+      <h5 class="subheader center"><i class="material-icons">accessibility</i></h5>
       <div class="row center">
         <h5 class="header col s12 light">
-          Choose a person to get their information and see pending onboarding items. To add a new person to track, hit the <a class="button">add</a> button up top.
+          Choose a person to get their information and see pending onboarding items.
+          To add a new person to track, hit the <a class="button">add</a> button up top.
         </h5>
       </div>
 
@@ -65,66 +76,65 @@
       </div>
 
 <!-- WEBSITE NOTES -->
-        <div class="section center">
-          <div class="row">
-            <div class="col s12 m4">
-              <div class="icon-block">
-                <h2 class="center teal-text text-lighten-2"><i class="material-icons">add_circle_outline</i></h2>
-                <h5 class="center">Please</h5>
-                <p class="light">Be sure to type everything properly when adding a new user.</p>
-              </div>
+      <div class="section center">
+        <div class="row">
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <h2 class="center teal-text text-lighten-2"><i class="material-icons">add_circle_outline</i></h2>
+              <h5 class="center">Please</h5>
+              <p class="light">Be sure to type everything properly when adding a new user.</p>
             </div>
-            <div class="col s12 m4">
-              <div class="icon-block">
-                <h2 class="center teal-text text-lighten-2"><i class="material-icons">insert_emoticon</i></h2>
-                <h5 class="center">Note</h5>
-                <p class="light">Still in development. Some stuff doesn't work, like undoing a done item - please be patient.</p>
-              </div>
+          </div>
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <h2 class="center teal-text text-lighten-2"><i class="material-icons">insert_emoticon</i></h2>
+              <h5 class="center">Note</h5>
+              <p class="light">Still in development. Some stuff doesn't work, like undoing a done item - please be patient.</p>
             </div>
-            <div class="col s12 m4">
-              <div class="icon-block">
-                <h2 class="center teal-text text-lighten-2"><i class="material-icons">mail_outline</i></h2>
-                <h5 class="center">Broken?</h5>
-                <p class="light">If something breaks please let me know via email, contact is at bottom.</p>
-              </div>
+          </div>
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <h2 class="center teal-text text-lighten-2"><i class="material-icons">mail_outline</i></h2>
+              <h5 class="center">Broken?</h5>
+              <p class="light">If something breaks please let me know via email, contact is at bottom.</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-  {% endblock %}
-
+  </div>
+{% endblock %}
 <!-- FOOTER -->
-<footer class="page-footer pink">
-  <div class="container">
-    <div class="row">
-      <div class="col l6 s12">
-        <h5 class="white-text">About</h5>
-        <p class="footer-light grey-text text-lighten-1">Built responsively with Django and Materialize CSS</p>
-      </div>
-      <div class="col l3 s12">
-        <h5 class="white-text"> </h5>
-        <ul>
-          <li><a class="white-text" href="#!"></a></li>
-        </ul>
-      </div>
-      <div class="col l3 s12">
-        <h5 class="white-text">Admin Only</h5>
-        <ul>
-          <li><a class="white-text" href="/admin/app/person/">All new staff</a></li>
-          <li><a class="white-text" href="/admin/app/assignment/">All assignments</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="footer-copyright">
+  <footer class="page-footer pink">
     <div class="container">
-      Made by <a class="pink-text text-lighten-3" href="mailto:rshimada@csc.com">@rshimada</a>
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">About</h5>
+          <p class="footer-light grey-text text-lighten-1">Built responsively with Django and Materialize CSS</p>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text"> </h5>
+          <ul>
+            <li><a class="white-text" href="#!"></a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Admin Only</h5>
+          <ul>
+            <li><a class="white-text" href="/admin/app/person/">All new staff</a></li>
+            <li><a class="white-text" href="/admin/app/assignment/">All assignments</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
-</footer>
+    <div class="footer-copyright">
+      <div class="container">
+        Made by <a class="pink-text text-lighten-3" href="mailto:rshimada@csc.com">@rshimada</a>
+      </div>
+    </div>
+  </footer>
 
+<!-- SCRIPTS -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="{% static 'app/js/materialize.js' %}"></script>
 

@@ -68,7 +68,7 @@ class Person(models.Model):
     tokenserial = models.CharField(max_length=15, blank=True, verbose_name='Token serial number')
 
     class Meta:
-        ordering = ['addeddate']
+        ordering = ['-addeddate']
         verbose_name_plural = 'people'
         unique_together = ("firstname", "lastname")
 
