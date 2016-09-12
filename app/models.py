@@ -7,13 +7,12 @@ CAPABILITY_CHOICES = (
     ('CDS', 'CDS'),
     ('VDS', 'VDS'),
     ('PCC', 'PCC'),
-    ('Virtualization', 'Virtualization'),
     ('Active Directory', 'Active Directory'),
     ('Backup', 'Backup'),
     ('Storage', 'Storage'),
     ('Tech Writer', 'Tech Writer'),
     ('UNIX', 'UNIX'),
-    ('Wintel', 'Wintel'))
+    ('Wintel', 'Wintel / VM'))
 
 class Task(models.Model):
     BU_CHOICES = (
