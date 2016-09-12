@@ -65,12 +65,12 @@ class Person(models.Model):
     team = models.CharField(max_length=20, choices=TEAM_CHOICES, default='iBUILD')
     kite = models.BooleanField(default=False, verbose_name='Assigned to KITE project')
     remote = models.BooleanField(default=False, verbose_name='Working remotely')
-    csctransfer = models.BooleanField(default=False, verbose_name='Existing CSC employee')
     employid = models.CharField(max_length=15, blank=True, verbose_name='Employee number or PRN')
     employtype = models.CharField(max_length=50, choices=EMPLOY_CHOICES, default='Contractor', verbose_name='Employment Type')
     cscid = models.CharField(max_length=10, blank=True, verbose_name='CSC UTC account name, e.g. XMDS123')
 
-    tokenserial = models.CharField(max_length=15, blank=True, verbose_name='Token serial number')
+    csctransfer = models.BooleanField(default=False, verbose_name='Existing CSC transfer from another account')
+    tokenserial = models.CharField(max_length=15, blank=True, verbose_name='CSC token serial number (if transfer)')
 
     class Meta:
         ordering = ['-addeddate']

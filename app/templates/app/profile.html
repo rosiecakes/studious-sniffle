@@ -41,6 +41,10 @@
             </div>
           </div>
           <div class="row">
+            {% if person.worksite %}<div class="chip">
+              <p class="card-item">{{ person.worksite }}</p>
+              Reporting to
+            </div>{% endif %}
             <div class="chip">
               {% if not person.kite %}<p class="card-item">No</p>
               {% else %}<p class="card-item">Yes</p>{% endif %}
