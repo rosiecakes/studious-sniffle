@@ -97,17 +97,17 @@ tr.tight {
 }
 
 .collapsible-header {
-  padding: 0.8rem 1rem 0.3rem 1rem;
+  padding: 0.8rem 1rem 0.3rem 1rem !important;
   border-bottom: 1px solid #eee;
 }
 
 .collapsible-header.active {
-  border-bottom: 0px solid #fff;
+  border-bottom: 0px solid #fff !important;
   box-shadow: none;
 }
 
 .collapsible-body p {
-  padding: 0.5rem 1rem 0.5rem 3rem;
+  padding: 0.5rem 1rem 0.5rem 3rem !important;
 }
 
 span.badge {
@@ -117,5 +117,5 @@ span.badge {
 }
 
 span.badge.new:after {
-  content: "";
+  content: "" !important;
 }
