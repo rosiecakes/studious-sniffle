@@ -26,6 +26,7 @@ class Person(models.Model):
         ('Active Directory', 'Active Directory'),
         ('Backup', 'Backup'),
         ('Storage', 'Storage'),
+        ('Tech Writer', 'Tech Writer'),
         ('UNIX', 'UNIX'),
         ('Wintel', 'Wintel'))
     TEAM_CHOICES = (
@@ -36,6 +37,9 @@ class Person(models.Model):
     EMPLOY_CHOICES = (
         ('Contractor', 'Contractor'),
         ('Employee', 'Employee'))
+    SITE_CHOICES = (
+        ('Hartford', 'Hartford'),
+        ('Puerto Rico', 'Puerto Rico'))
 
     firstname = models.CharField(max_length=200, verbose_name='First name')
     lastname = models.CharField(max_length=200, verbose_name='Last name')
@@ -44,8 +48,8 @@ class Person(models.Model):
     addeddate = models.DateTimeField(auto_now_add=True, verbose_name='Date added to status app')
 
     personalstreet = models.CharField(max_length=50, blank=True, verbose_name='Home street address')
-    personalcity = models.CharField(max_length=50, verbose_name='Home city', default='Hartford')
-    personalstate = models.CharField(max_length=50, verbose_name='Home state (abbreviation)', default='CT')
+    personalcity = models.CharField(max_length=50, blank=True, verbose_name='Home city', default='Hartford')
+    personalstate = models.CharField(max_length=50, blank=True, verbose_name='Home state (abbreviation)', default='CT')
     personalzip = models.CharField(max_length=5, blank=True, verbose_name='Home zip code')
     personalemail = models.EmailField(max_length=50, blank=True, verbose_name='Personal email address')
     personalphone = PhoneNumberField(blank=True, verbose_name='Personal phone number, format: +1 860 888 6060')
@@ -55,6 +59,7 @@ class Person(models.Model):
     workcity = models.CharField(max_length=50, verbose_name='Work city', default='Hartford')
     workstate = models.CharField(max_length=50, verbose_name='Work state', default='CT')
     workzip = models.CharField(max_length=5, blank=True, verbose_name='Work zip code')
+    worksite = models.CharField(max_length=20, blank=True, choices=SITE_CHOICES, verbose_name="Work site")
 
     capability = models.CharField(max_length=20, choices=CAPABILITY_CHOICES, default='Wintel')
     team = models.CharField(max_length=20, choices=TEAM_CHOICES, default='iBUILD')

@@ -35,7 +35,7 @@ class PersonAdmin(admin.ModelAdmin):
             'fields': ('firstname', 'lastname', 'shortname', 'startdate', 'employtype', 'employid', 'cscid')
         }),
         ('Contact Information', {
-            'fields': ('personalemail', 'personalphone', 'personalcity', 'personalstate', 'workphone', 'workcity', 'workstate')
+            'fields': ('personalemail', 'personalphone', 'personalcity', 'personalstate', 'workphone', 'worksite')
         }),
         ('Pod Information', {
             'fields': ('capability', 'team', 'kite', 'remote', 'csctransfer', 'tokenserial')
