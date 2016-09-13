@@ -390,12 +390,12 @@
               <td>{{ person.workphone }}</td>
               <td>{{ person.workcity }}, {{ person.workstate }}</td>
             </tr>
-            <tr>
+            {% if person.personalphone or person.personalcity %}<tr>
               <td class="cell-label">Personal</td>
               <td><a href="mailto:{{ person.personalemail }}">{{ person.personalemail }}</a></td>
               <td>{{ person.personalphone }}</td>
               <td>{{ person.personalcity }}, {{ person.personalstate }}</td>
-            </tr>
+            </tr>{% endif %}
           </tbody>
         </table>
       </div>
