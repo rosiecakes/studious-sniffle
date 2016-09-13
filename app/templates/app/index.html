@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load render_table from django_tables2 %}
 <html>
 <head
 <!-- OHAI
@@ -60,6 +61,7 @@
           To add a new person to track, hit the <a class="button">add</a> button up top.
         </h5>
       </div>
+        {% render_table table %}
 
 <!-- RECENTS -->
       <div class="container">

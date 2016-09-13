@@ -8,17 +8,18 @@ from django.dispatch import receiver
 from django.db.models import Q
 
 import random
+from django_tables2 import RequestConfig
 
 from app.models import Person, Task, Assignment
 from app.forms import AssignmentForm
+from app.tables import PersonTable
 
 
 @receiver(post_save, sender=Person)
 def my_handler(sender, **kwargs):
     """
     Create new assignments when a new person is added. Get the person, the tasks,
-    (if KITE, only get SIK tasks), then add them, and their predecessor tasks, to
-    person as 'assignments'.
+    then add them and their predecessor tasks, to the person as 'assignments'.
     """
     person = Person.objects.latest('addeddate')
     tasks = Task.objects.all().filter(Q(division='All UTC') | Q(division='CSC') | Q(capability=person.capability))
@@ -27,23 +28,31 @@ def my_handler(sender, **kwargs):
         tasks = Task.objects.all().filter(Q(division='CSC') | Q(division='SIK') & Q(capability=person.capability))
 
     if person.capability == 'Backup':
-        tasks = Task.objects.all().filter(Q(division='All UTC') | Q(division='CSC') | Q(capability='UNIX') | Q(capability='Wintel'))
+        tasks = Task.objects.all().filter(Q(division='All UTC') | Q(division='CSC') | Q(capability='UNIX') | Q(capability='Wintel') | Q(capability='Backup'))
 
     def create_new_tasks(person, task):
         obj, created = Assignment.objects.get_or_create(person=person, task=task)
 
     for task in tasks:
         create_new_tasks(person=person, task=task)
-
         for task in task.predecessor.all():
             create_new_tasks(person=person, task=task)
 
 
 def index(request):
     """Pass the lastest people created to the index view."""
+    table = PersonTable(Person.objects.all())
+    RequestConfig(request).configure(table)
+
     people = Person.objects.order_by('-addeddate')
     return render(request, 'app/index.html',
-        {'people': people})
+        {'people': people, 'table':table})
+
+
+def table(request):
+    table = PersonTable(Person.objects.all())
+    RequestConfig(request).configure(table)
+    return render(request, 'app/table.html', {'table':table})
 
 
 @require_http_methods(["GET", "POST"])

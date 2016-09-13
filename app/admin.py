@@ -32,7 +32,8 @@ class PersonAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('General Information', {
-            'fields': ('firstname', 'lastname', 'shortname', 'startdate', 'employtype', 'employid', 'cscid')
+            'fields': ('firstname', 'lastname', 'shortname', 'startdate', 'employtype', 'employid', 'cscid'),
+            'description': "I love you"
         }),
         ('Contact Information', {
             'fields': ('personalemail', 'personalphone', 'personalcity', 'personalstate', 'workphone', 'worksite')
