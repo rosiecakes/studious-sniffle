@@ -15,14 +15,31 @@ from app.forms import AssignmentForm
 
 @receiver(post_save, sender=Person)
 def my_handler(sender, **kwargs):
+    """
+    Create new assignments when a new person is added. Get the person, the tasks,
+    (if KITE, only get SIK tasks), then add them, and their predecessor tasks, to
+    person as 'assignments'.
+    """
     person = Person.objects.latest('addeddate')
     tasks = Task.objects.all().filter(Q(division='All UTC') | Q(division='CSC') | Q(capability=person.capability))
 
-    for task in tasks:
+    if person.kite:
+        tasks = Task.objects.all().filter(Q(division='CSC') | Q(division='SIK') & Q(capability=person.capability))
+
+    def create_new_tasks(person, task):
         obj, created = Assignment.objects.get_or_create(person=person, task=task)
+
+    for task in tasks:
+        create_new_tasks(person=person, task=task)
+
+        for task in task.predecessor.all():
+            create_new_tasks(person=person, task=task)
+
+        messages.success(request, 'Task(s) marked complete')
 
 
 def index(request):
+    """Pass the lastest people created to the index view."""
     people = Person.objects.order_by('-addeddate')
     return render(request, 'app/index.html',
         {'people': people})
@@ -30,6 +47,10 @@ def index(request):
 
 @require_http_methods(["GET", "POST"])
 def profile(request, shortname=None):
+    """
+    Get people and their tasks and pass them to the view. Update tasks (their
+    completion) depending on user POST input (which boxes they checked).
+    """
     people = Person.objects.order_by('-addeddate')
     person = get_object_or_404(Person, shortname=shortname)
     assignments = Assignment.objects.filter(person=person)
