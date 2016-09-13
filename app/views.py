@@ -26,6 +26,9 @@ def my_handler(sender, **kwargs):
     if person.kite:
         tasks = Task.objects.all().filter(Q(division='CSC') | Q(division='SIK') & Q(capability=person.capability))
 
+    if person.capability == 'Backup':
+        tasks = Task.objects.all().filter(Q(division='All UTC') | Q(division='CSC') | Q(capability='UNIX') | Q(capability='Wintel'))
+
     def create_new_tasks(person, task):
         obj, created = Assignment.objects.get_or_create(person=person, task=task)
 
@@ -34,8 +37,6 @@ def my_handler(sender, **kwargs):
 
         for task in task.predecessor.all():
             create_new_tasks(person=person, task=task)
-
-        messages.success(request, 'Task(s) marked complete')
 
 
 def index(request):
