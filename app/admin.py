@@ -14,13 +14,14 @@ def assign_all(modeladmin, request, queryset):
 
     messages.success(request, '{} tasks assigned successfully.'.format(count))
 
-def assign_unix_tasks(modeladmin, request, queryset):
+def assign_wintel_tasks(modeladmin, request, queryset):
     for person in queryset:
-        task = Task.objects.filter(capability='UNIX')
+        tasks = Task.objects.filter(capability='UNIX')
         count = 0
-        obj, created = Assignment.objects.get_or_create(person=person, task=task)
-        if created:
-            count += 1
+        for task in tasks:
+            obj, created = Assignment.objects.get_or_create(person=person, task=task)
+            if created:
+                count += 1
 
     messages.success(request, '{} tasks assigned successfully.'.format(count))
 
