@@ -49,12 +49,6 @@ def index(request):
         {'people': people, 'table':table})
 
 
-def table(request):
-    table = PersonTable(Person.objects.all())
-    RequestConfig(request).configure(table)
-    return render(request, 'app/table.html', {'table':table})
-
-
 @require_http_methods(["GET", "POST"])
 def profile(request, shortname=None):
     """

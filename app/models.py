@@ -93,6 +93,9 @@ class Person(models.Model):
     def __str__(self):
         return '{0} {1}'.format(self.firstname, self.lastname)
 
+    def assignment_count(self):
+        return Assignment.objects.filter(person=self, complete=False).count()
+
 
 class Assignment(models.Model):
     person = models.ForeignKey(Person)
