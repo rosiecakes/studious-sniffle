@@ -29,6 +29,12 @@ mark_incomplete.short_description = "Mark selected tasks incomplete"
 class PersonAdmin(admin.ModelAdmin):
     actions = [assign_all]
     readonly_fields = ['addeddate',]
+    list_display = ['name', 'shortname', 'capability', 'team']
+    list_filter = ['worksite', 'employtype', 'capability', 'team']
+    list_display_links = ['name', 'shortname']
+
+    def name(self, obj):
+        return '{} {}'.format(obj.firstname, obj.lastname)
 
     fieldsets = (
         ('General Information', {
@@ -75,4 +81,3 @@ class TaskAdmin(admin.ModelAdmin):
 admin.site.register(Assignment, AssignmentAdmin)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Task, TaskAdmin)
-admin.site.register(Domain)
