@@ -56,7 +56,7 @@ class Person(models.Model):
 
     firstname = models.CharField(max_length=200, verbose_name='First name')
     lastname = models.CharField(max_length=200, verbose_name='Last name')
-    shortname = models.CharField(max_length=200, unique=True, verbose_name='CSC shortname')
+    shortname = models.CharField(max_length=200, unique=True, verbose_name='Shortname')
     startdate = models.DateField(auto_now_add=False, verbose_name='Start date')
     addeddate = models.DateTimeField(auto_now_add=True, verbose_name='Date added to status app')
 
@@ -74,7 +74,7 @@ class Person(models.Model):
     workzip = models.CharField(max_length=5, blank=True, verbose_name='Work zip code')
     worksite = models.CharField(max_length=20, blank=True, choices=SITE_CHOICES, verbose_name="Work site")
 
-    capability = models.CharField(max_length=20, choices=CAPABILITY_CHOICES, default='Wintel')
+    capability = models.CharField(max_length=20, choices=CAPABILITY_CHOICES, default='Wintel', verbose_name='Capability')
     team = models.CharField(max_length=20, choices=TEAM_CHOICES, default='iBUILD')
     kite = models.BooleanField(default=False, verbose_name='Assigned to KITE project')
     remote = models.BooleanField(default=False, verbose_name='Working remotely')

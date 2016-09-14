@@ -4,7 +4,7 @@
 <head
 <!-- OHAI
                \||/
-                |  ^___..
+                |  ^___.. ♥
       /\  /\   / (__,,,,|
      ) /^\) ^\/ _)
      )   /^\/   _)
@@ -15,37 +15,40 @@
  | \____(      )___) )___
  \______(_______;;; __;;;
 -->
-
-  <!-- import materialize -->
+<!-- import materialize -->
   <link type="text/css" rel="stylesheet" href="{% static 'app/css/materialize.css' %}"/>
-
-  <!-- some lovely icons -->
+<!-- some lovely icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-
-  <!-- odd styling -->
+<!-- odd styling -->
   <link type="text/css" rel="stylesheet" href="{% static 'app/css/app.css' %}"/>
-
-  <!-- such favicon -->
+<!-- such favicon -->
   <link rel="shortcut icon" type="image/png" href="{% static 'app/img/favicon.png' %}"/>
 
 </head>
 <body>
 
 <!-- ITEMS FOR NAV -->
-<ul id="dropdown1" class="dropdown-content">
-  {% for person in people %}
+<ul id="dropdown-pr" class="dropdown-content">
+  {% for person in people %}{% if person.worksite == "Puerto Rico" %}
   <li><a href="/{{ person.shortname }}">{{ person }}</a></li>
-  {% endfor %}
+  {% endif %}{% endfor %}
+</ul>
+<ul id="dropdown-kite" class="dropdown-content">
+  {% for person in people %}{% if person.worksite == "Hartford" %}
+  <li><a href="/{{ person.shortname }}">{{ person }}</a></li>
+  {% endif %}{% endfor %}
 </ul>
 
 <!-- NAV -->
 <nav class="pink" role="navigation">
   <div class="nav-wrapper container">
-    <a id="logo-container" href="/" class="brand-logo hide-on-med-and-down">STATUS</a>
+    <a id="logo-container" href="/" class="brand-logo hide-on-med-and-down">UTC Onboarding</a>
     <ul class="right">
-      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Choose a person<i class="material-icons right">arrow_drop_down</i></a></li>
-      <li><a target="_blank" class="btn waves-effect waves-light teal" type="submit" name="action" href="/admin/app/person/add/">Add</a>
-      </li>
+      <li><a class="dropdown-button" href="#!" data-activates="dropdown-pr">Puerto Rico Staff<i class="material-icons right">arrow_drop_down</i></a></li>
+      <li><a target="_blank" class="btn waves-effect waves-light teal" type="submit" name="action" href="/admin/app/person/add/">Add</a></li>
+    </ul>
+    <ul class="right">
+      <li><a class="dropdown-button" href="#!" data-activates="dropdown-kite">Sik KITE Staff<i class="material-icons right">arrow_drop_down</i></a></li>
     </ul>
   </div>
 </nav>
@@ -53,30 +56,17 @@
   <div class="container">
     <div class="section no-pad-bot" id="index-banner">
 <!-- WELCOME STUFFS -->
-      <h1 class="header-main center pink-text text-lighten-3">welcome</h1>
-      <h5 class="subheader center"><i class="material-icons">accessibility</i></h5>
-      <div class="row center">
-        <h5 class="header col s12 light">
-          Choose a person to get their information and see pending onboarding items.
-          To add a new person to track, hit the <a class="button">add</a> button up top.
-        </h5>
-      </div>
-        {% render_table table %}
-
-<!-- RECENTS -->
-      <div class="container">
-        <div class="card blue-grey lighten-3 white-text">
-          <div class="card-content">
-            <span class="card-title">Recent Additions</span>
-            <ul id="collection1" class="collection">
-              {% for person in people|slice:":6" %}
-              <li><a href="/{{ person.shortname }}" class="collection-item">{{ person }}</a></li>
-              {% endfor %}
-            </ul>
+        <h1 class="header-main pink-text text-lighten-3">welcome</h1>
+          <div class="row">
+            <div class="subheader">
+              Choose a person to get their information and see pending onboarding items.
+              To add a new person to track, hit the <a class="button">add</a> button up top.
+            </div>
+            <blockquote>
+              Click column headers below to sort the table, and shortnames to view the person details.
+            </blockquote>
           </div>
-        </div>
-      </div>
-
+        {% render_table table %}
 <!-- WEBSITE NOTES -->
       <div class="section center">
         <div class="row">
@@ -96,9 +86,9 @@
           </div>
           <div class="col s12 m4">
             <div class="icon-block">
-              <h2 class="center teal-text text-lighten-2"><i class="material-icons">mail_outline</i></h2>
-              <h5 class="center">Broken?</h5>
-              <p class="light">If something breaks please let me know via email, contact is at bottom.</p>
+              <h2 class="center teal-text text-lighten-2"><a href="mailto:rshimada@csc.com"><i class="material-icons">mail_outline</i></h2>
+              <h5 class="center">Broken?</a></h5>
+              <p class="light">If something breaks please let me know via email for now please.</p>
             </div>
           </div>
         </div>
@@ -131,7 +121,7 @@
     </div> -->
     <div class="footer-copyright">
       <div class="container">
-        Made by <a class="pink-text text-lighten-3" href="mailto:rshimada@csc.com">@rshimada</a>
+        Built by <a class="pink-text text-lighten-3" href="mailto:rshimada@csc.com">@rshimada</a>
       </div>
     </div>
   </footer>

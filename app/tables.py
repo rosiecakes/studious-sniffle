@@ -1,10 +1,13 @@
 import django_tables2 as tables
+from django_tables2.utils import A
+
 from app.models import Person
 
 
 class PersonTable(tables.Table):
+    shortname = tables.LinkColumn('profile', args=[A('shortname')])
+
     class Meta:
         model = Person
-        cscid_table = tables.Column(accessor='cscid')
-        
-        fields = ('startdate', 'shortname', 'firstname', 'lastname', 'worksite', 'capability', 'kite', 'employtype', 'cscid_table')
+        attrs = {'class': 'highlight'}
+        fields = ('startdate', 'shortname', 'firstname', 'lastname', 'worksite', 'capability', 'employtype',)
