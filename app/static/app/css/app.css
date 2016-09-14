@@ -41,8 +41,9 @@
   color: rgba(0, 0, 0, 0.44);
   font-size: 14px;
   font-weight: 300;
-  line-height: 48px;
+  line-height: 28px;
   margin-top: -25px;
+  margin-bottom: 10px;
   margin-left: 12px;
 }
 
