@@ -32,14 +32,20 @@ class PersonAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('General Information', {
-            'fields': ('firstname', 'lastname', 'shortname', 'startdate', 'employtype', 'employid', 'cscid'),
-            'description': "I love you"
+            'fields': ('employtype', 'firstname', 'lastname', 'shortname', 'startdate', 'worksite'),
+            'description': "Bold fields are required, but more information is best."
         }),
         ('Contact Information', {
-            'fields': ('personalemail', 'personalphone', 'personalcity', 'personalstate', 'workphone', 'worksite')
+            'fields': ('personalcity', 'personalstate', 'personalemail', 'personalphone', 'workphone'),
+            'description': "Home addresses are important for new remote hires, though not necessary for people working at a delivery center and can be left blank."
         }),
         ('Pod Information', {
-            'fields': ('capability', 'team', 'kite', 'remote', 'csctransfer', 'tokenserial')
+            'fields': ('capability', 'team', 'kite', 'remote', ),
+            'description': "Note for KITE project: the KITE option must be checked to ensure proper task assignment."
+        }),
+        ('Other Information', {
+            'fields': ('csctransfer', 'tokenserial', 'employid', 'cscid'),
+            'description': ""
         }))
 
 
@@ -47,6 +53,7 @@ class AssignmentAdmin(admin.ModelAdmin):
     model = Assignment
     list_display = ['task', 'person', 'comment', 'complete']
     actions = [mark_complete, mark_incomplete]
+    list_filter = ['person', 'complete']
 
     def person(self, obj):
         return obj.person

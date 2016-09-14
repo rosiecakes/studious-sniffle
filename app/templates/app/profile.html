@@ -24,20 +24,20 @@
           </span>
           <div class="row">
             <div class="chip">
-              <p class="card-item">{{ shortname }}</p>
-              Shortname
-            </div>
-            <div class="chip">
               <p class="card-item">{{ person.startdate }}</p>
               Start date
             </div>
             <div class="chip">
-              <p class="card-item">{{ person.capability }}</p>
-              Capability
+              <a href="mailto:{{ shortname }}@csc.com"><p class="card-item">{{ shortname }}</p></a>
+              Shortname
             </div>
             <div class="chip">
               <p class="card-item">{{ person.team }}</p>
               Team
+            </div>
+            <div class="chip">
+              <p class="card-item">{{ person.capability }}</p>
+              Capability
             </div>
           </div>
           <div class="row">
@@ -171,6 +171,7 @@
                   {% endspaceless %}
                 </ul>
               <br /><input type="submit" value="mark done" class="teal btn waves-light">
+              <a target="_blank" class="btn waves-effect waves-light right grey lighten-4 teal-text" type="submit" name="action" href="/admin/app/assignment/?complete__exact=0&o=4.1&person__id__exact={{ person.id }}">Add Note</a>
             </form>
           </div>
 <!-- PENDING UTC TASKS -->
