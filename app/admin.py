@@ -18,21 +18,19 @@ def assign_one(modeladmin, request, queryset):
     for person in queryset:
         task = Task.objects.get(id=46)
         count = 0
-        for task in tasks:
-            obj, created = Assignment.objects.get_or_create(person=person, task=task)
-            if created:
-                count += 1
+        obj, created = Assignment.objects.get_or_create(person=person, task=task)
+        if created:
+            count += 1
 
     messages.success(request, '{} tasks assigned successfully.'.format(count))
 
 def assign_unix_tasks(modeladmin, request, queryset):
     for person in queryset:
-        tasks = Task.objects.filter(capability='UNIX')
+        task = Task.objects.filter(capability='UNIX')
         count = 0
-        for task in tasks:
-            obj, created = Assignment.objects.get_or_create(person=person, task=task)
-            if created:
-                count += 1
+        obj, created = Assignment.objects.get_or_create(person=person, task=task)
+        if created:
+            count += 1
 
     messages.success(request, '{} tasks assigned successfully.'.format(count))
 
