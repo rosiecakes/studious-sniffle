@@ -1,6 +1,6 @@
 from django.contrib import admin, messages
 
-from app.models import Person, Task, Assignment
+from app.models import Person, Task, Assignment, Domain
 
 
 def assign_all(modeladmin, request, queryset):
@@ -28,7 +28,7 @@ mark_incomplete.short_description = "Mark selected tasks incomplete"
 
 class PersonAdmin(admin.ModelAdmin):
     actions = [assign_all]
-    readonly_fields = ('addeddate',)
+    readonly_fields = ['addeddate',]
 
     fieldsets = (
         ('General Information', {
@@ -44,7 +44,7 @@ class PersonAdmin(admin.ModelAdmin):
             'description': "Note for KITE project: the KITE option must be checked to ensure proper task assignment."
         }),
         ('Other Information', {
-            'fields': ('csctransfer', 'tokenserial', 'employid', 'cscid'),
+            'fields': ('csctransfer', 'tokenserial', 'employid', 'cscid', 'nonadmindomain', 'admindomains'),
             'description': ""
         }))
 
@@ -75,3 +75,4 @@ class TaskAdmin(admin.ModelAdmin):
 admin.site.register(Assignment, AssignmentAdmin)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Task, TaskAdmin)
+admin.site.register(Domain)

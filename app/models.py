@@ -41,6 +41,16 @@ class Task(models.Model):
         return '{0}'.format(self.title)
 
 
+class Domain(models.Model):
+    name = models.CharField(max_length=20)
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+
 class Person(models.Model):
     TEAM_CHOICES = (
         ('iACTION', 'iACTION'),
@@ -53,10 +63,27 @@ class Person(models.Model):
     SITE_CHOICES = (
         ('Hartford', 'Hartford'),
         ('Puerto Rico', 'Puerto Rico'))
+    DOMAIN_CHOICES = (
+        ('CARRIER', 'CARRIER'),
+        ('CORP', 'CORP'),
+        ('CORPUSITAR', 'CORPUSITAR'),
+        ('GOODRICH', 'GOODRICH'),
+        ('HSUSCOMMERCIAL', 'HSUSCOMMERCIAL'),
+        ('IAE-US', 'IAE-US'),
+        ('NAOTIS', 'NAOTIS'),
+        ('NA1UTCFS', 'NA1UTCFS'),
+        ('PWFNRADMIN', 'PWFNRADMIN'),
+        ('PWUS', 'PWUS'),
+        ('SIKUSCOMMERCIAL', 'SIKUSCOMMERCIAL'),
+        ('UTCAUS', 'UTCAUS'),
+        ('UTCAIN', 'UTCAIN'),
+        ('UTCCGL', 'UTCCGL'),
+        ('UTCCWH', 'UTCCWH'),
+        ('UTCGWH', 'UTCGWH'))
 
-    firstname = models.CharField(max_length=200, verbose_name='First name')
-    lastname = models.CharField(max_length=200, verbose_name='Last name')
-    shortname = models.CharField(max_length=200, unique=True, verbose_name='Shortname')
+    firstname = models.CharField(max_length=50, verbose_name='First name')
+    lastname = models.CharField(max_length=50, verbose_name='Last name')
+    shortname = models.CharField(max_length=50, unique=True, verbose_name='Shortname')
     startdate = models.DateField(auto_now_add=False, verbose_name='Start date')
     addeddate = models.DateTimeField(auto_now_add=True, verbose_name='Date added to status app')
 
@@ -78,12 +105,15 @@ class Person(models.Model):
     team = models.CharField(max_length=20, choices=TEAM_CHOICES, default='iBUILD')
     kite = models.BooleanField(default=False, verbose_name='Assigned to KITE project')
     remote = models.BooleanField(default=False, verbose_name='Working remotely')
+
     employid = models.CharField(max_length=15, blank=True, verbose_name='Employee number or PRN')
     employtype = models.CharField(max_length=50, choices=EMPLOY_CHOICES, default='Contractor', verbose_name='Employment Type')
-    cscid = models.CharField(max_length=10, blank=True, verbose_name='CSC UTC account name, e.g. XMDS123')
-
+    cscid = models.CharField(max_length=10, blank=True, verbose_name='CSC UTC account name, e.g. XMDS123, XCS2233')
     csctransfer = models.BooleanField(default=False, verbose_name='Existing CSC transfer from another account')
     tokenserial = models.CharField(max_length=15, blank=True, verbose_name='CSC token serial number (if transfer)')
+
+    nonadmindomain = models.CharField(max_length=20, blank=True, verbose_name='Domain of non-admin ID', choices=DOMAIN_CHOICES)
+    admindomains = models.ManyToManyField(Domain, blank=True, verbose_name='Domains where admin ID exists')
 
     class Meta:
         ordering = ['-addeddate']

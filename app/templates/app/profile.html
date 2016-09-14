@@ -24,12 +24,12 @@
           </span>
           <div class="row">
             <div class="chip">
-              <p class="card-item">{{ person.startdate }}</p>
-              Start date
-            </div>
-            <div class="chip">
               <a href="mailto:{{ shortname }}@csc.com"><p class="card-item">{{ shortname }}</p></a>
               Shortname
+            </div>
+            <div class="chip">
+              <p class="card-item">{{ person.startdate }}</p>
+              Start date
             </div>
             <div class="chip">
               <p class="card-item">{{ person.team }}</p>
@@ -63,6 +63,10 @@
             {% if person.cscid %}<div class="chip">
             <p class="card-item">{{ person.cscid }}</p>
             UTC ID</div>{% endif %}
+            <div class="chip">
+              <a target="_blank" href="/admin/app/person/{{ person.id }}/change/"><p class="card-item">Add</p></a>
+              More Info
+            </div>
           </div>
         </div>
       </div>
@@ -288,6 +292,7 @@
                     {% endspaceless %}
                   </ul>
                 <br /><input type="submit" value="mark done" class="teal btn waves-light">
+                <a target="_blank" class="btn waves-effect waves-light right grey lighten-4 teal-text" type="submit" name="action" href="/admin/app/assignment/?complete__exact=0&o=4.1&person__id__exact={{ person.id }}">Add Note</a>
               </form>
             </div>
           </div>
