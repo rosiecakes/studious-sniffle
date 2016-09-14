@@ -82,15 +82,12 @@ class PersonAdmin(admin.ModelAdmin):
 
 class AssignmentAdmin(admin.ModelAdmin):
     model = Assignment
-    list_display = ['task', 'person', 'comment', 'complete']
+    list_display = ['task', 'person', 'capability', 'comment', 'complete']
     actions = [mark_complete, mark_incomplete]
     list_filter = ['person', 'complete']
 
-    def person(self, obj):
-        return obj.person
-
-    def task(self, obj):
-        return obj.task
+    def capability(self, obj):
+        return obj.person.capability
 
 
 class TaskAdmin(admin.ModelAdmin):
