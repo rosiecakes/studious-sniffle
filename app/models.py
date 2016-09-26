@@ -12,7 +12,8 @@ CAPABILITY_CHOICES = (
     ('Storage', 'Storage'),
     ('Tech Writer', 'Tech Writer'),
     ('UNIX', 'UNIX'),
-    ('Wintel', 'Wintel / VM'))
+    ('Wintel', 'Wintel'),
+    ('Virtualization', 'Virtualization'))
 
 class Task(models.Model):
     BU_CHOICES = (
@@ -108,7 +109,7 @@ class Person(models.Model):
 
     employid = models.CharField(max_length=15, blank=True, verbose_name='Employee number or PRN')
     employtype = models.CharField(max_length=50, choices=EMPLOY_CHOICES, default='Contractor', verbose_name='Employment Type')
-    cscid = models.CharField(max_length=10, blank=True, verbose_name='UTC ID, eg XMDS123, XCS2233')
+    cscid = models.CharField(max_length=10, blank=True, verbose_name='UTC ID')
     csctransfer = models.BooleanField(default=False, verbose_name='Existing CSC transfer from another account')
     tokenserial = models.CharField(max_length=15, blank=True, verbose_name='CSC token serial number (if transfer)')
 

@@ -44,7 +44,7 @@ def index(request):
     table = PersonTable(Person.objects.all())
     RequestConfig(request).configure(table)
 
-    people = Person.objects.order_by('-addeddate')
+    people = Person.objects.order_by('firstname')
     return render(request, 'app/index.html',
         {'people': people, 'table':table})
 
@@ -55,7 +55,7 @@ def profile(request, shortname=None):
     Get people and their tasks and pass them to the view. Update tasks (their
     completion) depending on user POST input (which boxes they checked).
     """
-    people = Person.objects.order_by('-addeddate')
+    people = Person.objects.order_by('firstname')
     person = get_object_or_404(Person, shortname=shortname)
     assignments = Assignment.objects.filter(person=person)
     randimg = random.randint(1, 20)
