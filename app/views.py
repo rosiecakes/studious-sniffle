@@ -42,7 +42,7 @@ def my_handler(sender, **kwargs):
 def index(request):
     """Pass the lastest people created to the index view."""
     table = PersonTable(Person.objects.all())
-    RequestConfig(request).configure(table)
+    RequestConfig(request, paginate=False).configure(table)
 
     people = Person.objects.order_by('firstname')
     return render(request, 'app/index.html',
