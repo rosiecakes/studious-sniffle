@@ -51,6 +51,15 @@ def set_assignment_color(modeladmin, request, queryset):
 
     messages.success(request, '{} task colors changed successfully.'.format(count))
 
+def assign_task_to_all_people(modeladmin, request, queryset):
+    for task in queryset:
+        count = 0
+        for person in Person.objects.all():
+            obj, create = Assignment.objects.get_or_create(person=person, task=task)
+            count += 1
+
+    messages.success(request, '{} new assignments created for {}.'.format(count, task))
+
 def mark_complete(modeladmin, request, queryset):
     queryset.update(complete=True)
 
@@ -64,6 +73,7 @@ mark_incomplete.short_description = "Mark selected tasks incomplete"
 assign_unix_tasks.short_description = "Add UNIX tasks"
 assign_wintel_tasks.short_description = "Add Wintel tasks"
 set_assignment_color.short_description = "Set color of task stage"
+assign_task_to_all_people.short_description = "Add task as assignment for everyone"
 
 
 class PersonAdmin(admin.ModelAdmin):
@@ -115,6 +125,7 @@ class TaskAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'stage', 'predecessor_count', 'capability', 'division', 'vpnrequired']
     list_editable = ['title', 'stage', 'capability', 'division', 'vpnrequired']
     list_display_links = ['id']
+    actions = [assign_task_to_all_people]
 
     def predecessor_count(self, obj):
         return obj.predecessor.count()
