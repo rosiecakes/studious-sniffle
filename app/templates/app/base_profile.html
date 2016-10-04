@@ -92,7 +92,7 @@
             <li>
               <div class="collapsible-header">
                 <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" />
-                <label class="blue-text" for="{{ assignment.id }}">
+                <label class="{{ assignment.divclass }}" for="{{ assignment.id }}">
                   {% if assignment.comment %}<strong>{% endif %}
                    {{ assignment }}
                   {% if assignment.comment %}</strong>{% endif %}
