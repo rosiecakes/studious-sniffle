@@ -36,6 +36,21 @@ def assign_wintel_tasks(modeladmin, request, queryset):
 
     messages.success(request, '{} tasks assigned successfully.'.format(count))
 
+def set_assignment_color(modeladmin, request, queryset):
+    colors = ['deep-orange-text', 'cyan-text', 'deep-purple-text']
+    count = 0
+    for a in queryset:
+        if a.task.stage == "1":
+            a.divclass = colors[0]
+        if a.task.stage == "2":
+            a.divclass = colors[1]
+        if a.task.stage == "3":
+            a.divclass = colors[2]
+        a.save()
+        count += 1
+
+    messages.success(request, '{} task colors changed successfully.'.format(count))
+
 def mark_complete(modeladmin, request, queryset):
     queryset.update(complete=True)
 
@@ -48,6 +63,7 @@ mark_complete.short_description = "Mark selected tasks complete"
 mark_incomplete.short_description = "Mark selected tasks incomplete"
 assign_unix_tasks.short_description = "Add UNIX tasks"
 assign_wintel_tasks.short_description = "Add Wintel tasks"
+set_assignment_color.short_description = "Set color of task stage"
 
 
 class PersonAdmin(admin.ModelAdmin):
@@ -83,8 +99,12 @@ class PersonAdmin(admin.ModelAdmin):
 class AssignmentAdmin(admin.ModelAdmin):
     model = Assignment
     list_display = ['task', 'person', 'capability', 'comment', 'complete']
-    actions = [mark_complete, mark_incomplete]
+    actions = [mark_complete, mark_incomplete, set_assignment_color]
     list_filter = ['person', 'complete']
+    fieldsets = (
+        (None, {
+            'fields': ('person', 'task', 'comment', 'whosubmitted', 'processing', 'complete')
+        }),)
 
     def capability(self, obj):
         return obj.person.capability

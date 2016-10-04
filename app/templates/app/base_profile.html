@@ -1,0 +1,233 @@
+{% extends "app/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+<!-- CAT GENERATOR -->
+    <div class="col l3 hide-on-med-and-down">
+      <div class="card">
+        <div class="card-image waves-effect waves-block waves-light">
+          <a href="/{{ shortname }}">
+            <img src="static/app/img/cat/cat-{{ randimg }}-min.png"></a>
+        </div>
+      </div>
+    </div>
+
+<!-- PERSON MAIN -->
+    {% include "app/base_profile_person.html" %}
+  </div>
+
+<!-- TO DO ITEMS -->
+  <div class="row">
+    <div class="col s12 l6">
+      <div class="card">
+        <div class="card-content grey lighten-4">
+          <span class="card-title">Tasks
+            <i class="right small material-icons">sentiment_neutral</i>
+          </span>
+<!-- TAB TITLES -->
+          <div class="row">
+              <div class="col s12">
+                <ul class="tabs">
+                  <li class="tab col s3"><a class="active" href="#csc_tasks">CSC</a></li>
+                  <li class="tab col s3"><a href="#utc_tasks">UTC</a></li>
+                </ul>
+              </div>
+<!-- TO DO CSC TASKS -->
+            <div id="csc_tasks" class="col s12">
+              <form action="" method="POST">
+              {% csrf_token %}
+<!-- STAGE 1 CSC TASKS -->
+              {% include "app/tasks/csc_1.html" %}
+<!-- STAGE 2 CSC TASKS -->
+              {% include "app/tasks/csc_2.html" %}
+<!-- STAGE 3 CSC TASKS -->
+              {% include "app/tasks/csc_3.html" %}
+              <br /><input type="submit" value="mark done" class="teal btn waves-light">
+              <input type="submit" value="processing" name="processing" class="teal btn waves-light">
+              <!-- <a target="_blank" class="btn waves-effect waves-light right grey lighten-4 teal-text" type="submit" name="action" href="/admin/app/assignment/?complete__exact=0&o=4.1&person__id__exact={{ person.id }}">Add Note</a> -->
+              </form>
+            </div>
+<!-- TO DO UTC TASKS -->
+            <div id="utc_tasks" class="col s12">
+              <form action="" method="POST">
+              {% csrf_token %}
+<!-- STAGE 1 UTC TASKS -->
+              {% include "app/tasks/utc_1.html" %}
+<!-- STAGE 2 UTC TASKS -->
+              {% include "app/tasks/utc_2.html" %}
+<!-- STAGE 3 UTC TASKS -->
+              {% include "app/tasks/utc_3.html" %}
+<!-- STAGE 3 UTC BU TASKS -->
+              <span>Business-unit specific</span>
+              {% include "app/tasks/bu_specific.html" %}
+
+              <br /><input type="submit" value="mark done" name="done" class="teal btn waves-light">
+              <input type="submit" value="processing" name="processing" class="teal btn waves-light">
+              <!-- <a target="_blank" class="btn waves-effect waves-light right grey lighten-4 teal-text" type="submit" name="action" href="/admin/app/assignment/?complete__exact=0&o=4.1&person__id__exact={{ person.id }}">Add Note</a> -->
+              </form>
+            </div>
+          </div>
+          {% if messages %}<ul class="messages">
+          {% for message in messages %}<li{% if message.tags %} class="message {{ message.tags }}" {% endif %}>{{ message }}</li>
+          {% endfor %}</ul>{% endif %}
+        </div>
+      </div>
+    </div>
+
+<!-- PROCESSING ITEMS -->
+    <div class="col s12 l6">
+      <div class="card">
+        <div class="card-content grey lighten-4">
+          <span class="card-title">Processing
+            <i class="right small material-icons">hourglass_empty</i>
+          </span>
+          <form action="" method="post">
+            {% csrf_token %}
+            <ul class="collapsible" data-collapsible="accordion">
+            {% spaceless %}
+            {% for assignment in assignments %}
+            {% if assignment.processing and not assignment.complete %}
+            <li>
+              <div class="collapsible-header">
+                <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" />
+                <label class="blue-text" for="{{ assignment.id }}">
+                  {% if assignment.comment %}<strong>{% endif %}
+                   {{ assignment }}
+                  {% if assignment.comment %}</strong>{% endif %}
+                </label>
+                {% if assignment.whosubmitted %}
+                <!-- <span class="new badge">{{ assignment.whosubmitted }}</span> -->
+                {% endif %}
+              </div>
+            </li>
+            {% endif %}
+            {% endfor %}
+            {% endspaceless %}
+            </ul>
+            <br /><input type="submit" value="mark done"  name="done" class="teal btn waves-light">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- LEGEND -->
+    <div class="col s12 l6">
+      <div class="card">
+        <div class="card-content blue-grey lighten-3">
+          <span class="card-title white-text">Legend
+            <i class="right small material-icons">color_lens</i>
+          </span>
+          <div class="card-content grey lighten-5">
+            <table id="legend">
+              <col style="width:10%">
+              <col style="width:90%">
+              <tbody>
+                <tr>
+                  <td><i class="material-icons teal-text">looks_one</i></td>
+                  <td>Expand to see pre-requisites</td>
+                </tr>
+                <tr>
+                  <td><i class="material-icons deep-orange-text">indeterminate_check_box</i></td>
+                  <td>Can be completed before or soon after start date</td>
+                </tr>
+                <tr>
+                  <td><i class="material-icons cyan-text">indeterminate_check_box</i></td>
+                  <td>Can be completed after new hire starts</td>
+                </tr>
+                <tr>
+                  <td><i class="material-icons deep-purple-text">indeterminate_check_box</i></td>
+                  <td>One or more pre-requisites - complete last</td>
+                </tr>
+                <tr>
+                  <td><strong><i class="material-icons black-text">format_bold</i></strong></td>
+                  <td>Bold items have comments, hover to see</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- COMPLETED ITEMS -->
+    <div class="col s12 l6">
+      <div class="card">
+        <div class="card-content grey lighten-5">
+          <span class="card-title">Completed
+            <i class="right small material-icons">sentiment_very_satisfied</i>
+          </span>
+          <form action="" method="post">
+            <!-- THANKS DJANGO -->
+            {% csrf_token %}
+            {% spaceless %}
+            {% for assignment in assignments %}
+            {% if assignment.complete %}
+            <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" checked disabled="disabled"/>
+            {% if assignment.comment %}
+            <label class="gray-text tooltipped" for="{{ assignment.id }}" data-tooltip="{{ assignment.comment }}"><strong>{{ assignment }}</strong></label><br />
+            {% endif %}
+            {% if not assignment.comment %}
+            <label class="gray-text" for="{{ assignment.id }}">{{ assignment }}</label><br />
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            {% endspaceless %}
+          </form>
+        </div>
+      </div>
+    </div>
+
+<!-- PERSON CONTACT -->
+  <div class="col s12 l6">
+    <div class="card profile-card">
+      <div class="card-content">
+        <table class="responsive-table highlight">
+          <thead>
+            <tr>
+              <th>Contact</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>City</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="cell-label">Work</td>
+              <td><a href="mailto:{{ shortname }}@csc.com">{{ shortname }}@csc.com</a></td>
+              <td>{{ person.workphone }}</td>
+              <td>{{ person.workcity }}, {{ person.workstate }}</td>
+            </tr>
+            {% if person.personalphone or person.personalcity %}<tr>
+              <td class="cell-label">Personal</td>
+              <td><a href="mailto:{{ person.personalemail }}">{{ person.personalemail }}</a></td>
+              <td>{{ person.personalphone }}</td>
+              <td>{{ person.personalcity }}, {{ person.personalstate }}</td>
+            </tr>{% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+<!-- MISC NUMBERS -->
+  <div class="col s12 l6">
+    <div class="card profile-card">
+      <div class="card-content">
+        <table class="responsive-table highlight">
+          <tbody>
+            <tr>
+              <td class="cell-label">Employee number</td>
+              <td class="td-bold">{{ person.employid }}</td>
+              <td class="cell-label">Token number</td>
+              <td class="td-bold">{{ person.tokenserial }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

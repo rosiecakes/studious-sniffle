@@ -132,7 +132,10 @@ class Assignment(models.Model):
     person = models.ForeignKey(Person)
     task = models.ForeignKey(Task)
     comment = models.CharField(max_length=200, blank=True)
+    processing = models.BooleanField(default=False)
+    whosubmitted = models.CharField(max_length=50, blank=True,  verbose_name='Who submitted it?')
     complete = models.BooleanField(default=False)
+    divclass = models.CharField(max_length=50, blank=True)
 
     class Meta:
         ordering = ['task']

@@ -1,0 +1,26 @@
+<ul class="collapsible" data-collapsible="accordion">
+  {% spaceless %}
+  {% for assignment in assignments %}
+  {% if assignment.task.stage == "3" and not assignment.complete and not assignment.processing and assignment.task.division == "CSC" %}
+  <li>
+    <div class="collapsible-header">
+      <input type="checkbox" name="assignment" id="{{ assignment.id }}" value="{{ assignment.id }}" />
+      <label class="{{ assignment.divclass }} {% if assignment.comment %}tooltipped{% endif %}" for="{{ assignment.id }}" {% if assignment.comment %}data-tooltip="{{ assignment.comment }}"{% endif %}>
+        {% if assignment.comment %}<strong>{% endif %}
+          {{ assignment }}
+        {% if assignment.comment %}</strong>{% endif %}
+      </label>
+      {% if assignment.task.predecessor.all %}
+      <span class="new badge">{{ assignment.task.predecessor.all.count }}</span>
+      {% endif %}
+    </div>
+    <div class="collapsible-body">
+      {% for task in assignment.task.predecessor.all %}
+      <p>{{ task }}</p>
+      {% endfor %}
+    </div>
+  </li>
+  {% endif %}
+  {% endfor %}
+  {% endspaceless %}
+</ul>

@@ -45,7 +45,7 @@ def index(request):
     RequestConfig(request, paginate=False).configure(table)
 
     people = Person.objects.order_by('firstname')
-    return render(request, 'app/index.html',
+    return render(request, 'app/base.html',
         {'people': people, 'table':table})
 
 
@@ -65,10 +65,17 @@ def profile(request, shortname=None):
         check_values = request.POST.getlist('assignment')
 
         for check in check_values:
-            task = Assignment.objects.get(id=check)
-            task.complete = True
-            task.save()
-            messages.success(request, 'Task(s) marked complete')
+            if 'mark done' in request.POST.getlist('done'):
+                task = Assignment.objects.get(id=check)
+                task.complete = True
+                task.save()
+                messages.success(request, 'Marked complete')
+
+            if 'processing' in request.POST.getlist('processing'):
+                task = Assignment.objects.get(id=check)
+                task.processing = True
+                task.save()
+                messages.success(request, 'Moved to processing')
 
     context = {'shortname': shortname,
                 'people': people,
@@ -78,4 +85,4 @@ def profile(request, shortname=None):
                 'message': messages,
                 'randimg': randimg}
 
-    return render(request, 'app/profile.html', context)
+    return render(request, 'app/base_profile.html', context)
