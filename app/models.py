@@ -1,5 +1,6 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from django.db.models import Q
 
 
 CAPABILITY_CHOICES = (
@@ -15,18 +16,18 @@ CAPABILITY_CHOICES = (
     ('Wintel', 'Wintel'),
     ('Virtualization', 'Virtualization'))
 
-class Task(models.Model):
-    BU_CHOICES = (
-        ('CSC', 'CSC'),
-        ('All UTC', 'All UTC'),
-        ('CORP', 'Corp'),
-        ('CCS', 'CCS (Carrier/FS)'),
-        ('OTIS', 'Otis'),
-        ('PW', 'P&W'),
-        ('SIK', 'Sik'),
-        ('UTAS', 'UTAS'),
-        ('UTRC', 'UTRC'))
+BU_CHOICES = (
+    ('CSC', 'CSC'),
+    ('All UTC', 'All UTC'),
+    ('CORP', 'Corp'),
+    ('CCS', 'CCS (Carrier/FS)'),
+    ('OTIS', 'Otis'),
+    ('PW', 'P&W'),
+    ('SIK', 'Sik'),
+    ('UTAS', 'UTAS'),
+    ('UTRC', 'UTRC'))
 
+class Task(models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=600, blank=True)
     stage = models.CharField(max_length=2, blank=True)
@@ -64,23 +65,6 @@ class Person(models.Model):
     SITE_CHOICES = (
         ('Hartford', 'Hartford'),
         ('Puerto Rico', 'Puerto Rico'))
-    DOMAIN_CHOICES = (
-        ('CARRIER', 'CARRIER'),
-        ('CORP', 'CORP'),
-        ('CORPUSITAR', 'CORPUSITAR'),
-        ('GOODRICH', 'GOODRICH'),
-        ('HSUSCOMMERCIAL', 'HSUSCOMMERCIAL'),
-        ('IAE-US', 'IAE-US'),
-        ('NAOTIS', 'NAOTIS'),
-        ('NA1UTCFS', 'NA1UTCFS'),
-        ('PWFNRADMIN', 'PWFNRADMIN'),
-        ('PWUS', 'PWUS'),
-        ('SIKUSCOMMERCIAL', 'SIKUSCOMMERCIAL'),
-        ('UTCAUS', 'UTCAUS'),
-        ('UTCAIN', 'UTCAIN'),
-        ('UTCCGL', 'UTCCGL'),
-        ('UTCCWH', 'UTCCWH'),
-        ('UTCGWH', 'UTCGWH'))
 
     firstname = models.CharField(max_length=50, verbose_name='First name')
     lastname = models.CharField(max_length=50, verbose_name='Last name')
@@ -108,13 +92,10 @@ class Person(models.Model):
     remote = models.BooleanField(default=False, verbose_name='Working remotely')
 
     employid = models.CharField(max_length=15, blank=True, verbose_name='Employee number or PRN')
-    employtype = models.CharField(max_length=50, choices=EMPLOY_CHOICES, default='Contractor', verbose_name='Employment Type')
+    employtype = models.CharField(max_length=50, choices=EMPLOY_CHOICES, default='Contractor', verbose_name='Type')
     cscid = models.CharField(max_length=10, blank=True, verbose_name='UTC ID')
     csctransfer = models.BooleanField(default=False, verbose_name='Existing CSC transfer from another account')
     tokenserial = models.CharField(max_length=15, blank=True, verbose_name='CSC token serial number (if transfer)')
-
-    nonadmindomain = models.CharField(max_length=20, blank=True, verbose_name='Domain of non-admin ID', choices=DOMAIN_CHOICES)
-    admindomains = models.ManyToManyField(Domain, blank=True, verbose_name='Domains where admin ID exists')
 
     class Meta:
         ordering = ['-addeddate']
@@ -142,3 +123,10 @@ class Assignment(models.Model):
 
     def __str__(self):
         return self.task.title
+
+    def capability(self):
+        return self.person.capability
+
+    def bu_columns(self):
+        for bu in BU_CHOICES:
+            return Task.objects.all().filter(Q(title__icontains=bu))

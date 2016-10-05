@@ -12,3 +12,13 @@ class PersonTable(tables.Table):
         model = Person
         attrs = {'class': 'highlight'}
         fields = ('tasks', 'startdate', 'shortname', 'firstname', 'lastname', 'cscid', 'worksite', 'capability', 'employtype')
+
+
+class AssignmentTable(tables.Table):
+    capability = tables.Column(accessor='capability', orderable=False)
+    bu_columns = tables.Column(accessor='bu_columns', orderable=False)
+
+    class Meta:
+        model = Assignment
+        attrs = {'class': 'highlight'}
+        fields = ('person', 'processing', 'complete')

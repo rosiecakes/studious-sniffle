@@ -12,7 +12,7 @@ from django_tables2 import RequestConfig
 
 from app.models import Person, Task, Assignment
 from app.forms import AssignmentForm
-from app.tables import PersonTable
+from app.tables import PersonTable, AssignmentTable
 
 
 @receiver(post_save, sender=Person)
@@ -47,6 +47,14 @@ def index(request):
     people = Person.objects.order_by('firstname')
     return render(request, 'app/base.html',
         {'people': people, 'table':table})
+
+
+def tables(request):
+    """View table options"""
+    table = AssignmentTable(Assignment.objects.all())
+    RequestConfig(request).configure(table)
+
+    return render(request, 'app/base_tables.html', {'table':table})
 
 
 @require_http_methods(["GET", "POST"])
