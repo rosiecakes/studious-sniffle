@@ -10,6 +10,7 @@ CAPABILITY_CHOICES = (
     ('PCC', 'PCC'),
     ('Active Directory', 'Active Directory'),
     ('Backup', 'Backup'),
+    ('Computer Operator', 'Computer Operator'),
     ('Storage', 'Storage'),
     ('Tech Writer', 'Tech Writer'),
     ('UNIX', 'UNIX'),

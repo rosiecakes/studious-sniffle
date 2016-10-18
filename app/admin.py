@@ -101,7 +101,7 @@ class PersonAdmin(admin.ModelAdmin):
             'description': "Note for KITE project: the KITE option must be checked to ensure proper task assignment."
         }),
         ('Other Information', {
-            'fields': ('csctransfer', 'tokenserial', 'employid', 'cscid', 'nonadmindomain', 'admindomains'),
+            'fields': ('csctransfer', 'tokenserial', 'employid', 'cscid'),
             'description': ""
         }))
 
