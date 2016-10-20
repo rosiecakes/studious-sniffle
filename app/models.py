@@ -29,6 +29,10 @@ BU_CHOICES = (
     ('UTRC', 'UTRC'))
 
 class Task(models.Model):
+    TASK_TYPE_CHOICES = (
+        ('Install', 'Install'),
+        ('Access','Access'))
+
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=600, blank=True)
     stage = models.CharField(max_length=2, blank=True)
@@ -36,6 +40,7 @@ class Task(models.Model):
     vpnrequired = models.BooleanField(default=False, verbose_name='VPN required for this')
     capability = models.CharField(max_length=20, choices=CAPABILITY_CHOICES, blank=True)
     division = models.CharField(max_length=20, choices=BU_CHOICES, blank=True)
+    task_type = models.CharField(max_length=10, choices=TASK_TYPE_CHOICES, blank=True)
 
     class Meta:
         ordering = ['title', 'stage', 'id']

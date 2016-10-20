@@ -122,8 +122,8 @@ class AssignmentAdmin(admin.ModelAdmin):
 
 class TaskAdmin(admin.ModelAdmin):
     model = Task
-    list_display = ['id', 'title', 'stage', 'predecessor_count', 'capability', 'division', 'vpnrequired']
-    list_editable = ['title', 'stage', 'capability', 'division', 'vpnrequired']
+    list_display = ['id', 'title', 'task_type', 'stage', 'predecessor_count', 'capability', 'division']
+    list_editable = ['title', 'stage', 'capability', 'division']
     list_display_links = ['id']
     actions = [assign_task_to_all_people]
 
