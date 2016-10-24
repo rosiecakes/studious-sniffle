@@ -100,15 +100,16 @@ class PersonAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('General Information', {
-            'fields': ('employtype', 'firstname', 'lastname', 'shortname', 'startdate', 'worksite'),
+            'fields': ('employtype', 'firstname', 'lastname', 'shortname', 'startdate', 'worksite', 'workphone'),
             'description': "Bold fields are required, but more information is best."
         }),
-        ('Contact Information', {
-            'fields': ('personalcity', 'personalstate', 'personalemail', 'personalphone', 'workphone'),
+        ('Personal Information', {
+            'classes': ('collapse',),
+            'fields': ('personalcity', 'personalstate', 'personalemail', 'personalphone'),
             'description': "Home addresses are important for new remote hires, though not necessary for people working at a delivery center and can be left blank."
         }),
         ('Pod Information', {
-            'fields': ('capability', 'team', 'kite', 'remote', ),
+            'fields': ('capability', 'team', 'kite',),
             'description': "Note for KITE project: the KITE option must be checked to ensure proper task assignment."
         }),
         ('Other Information', {
