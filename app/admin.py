@@ -35,6 +35,17 @@ def assign_wintel_tasks(modeladmin, request, queryset):
                 count += 1
 
     messages.success(request, '{} tasks assigned successfully.'.format(count))
+    
+def assign_computer_operator_tasks(modeladmin, request, queryset):
+    for person in queryset:
+        tasks = Task.objects.filter(capability='Computer Operator')
+        count = 0
+        for task in tasks:
+            obj, created = Assignment.objects.get_or_create(person=person, task=task)
+            if created:
+                count += 1
+
+    messages.success(request, '{} tasks assigned successfully.'.format(count))
 
 def set_assignment_color(modeladmin, request, queryset):
     colors = ['deep-orange-text', 'cyan-text', 'deep-purple-text']
@@ -74,10 +85,10 @@ assign_unix_tasks.short_description = "Add UNIX tasks"
 assign_wintel_tasks.short_description = "Add Wintel tasks"
 set_assignment_color.short_description = "Set color of task stage"
 assign_task_to_all_people.short_description = "Add task as assignment for everyone"
-
+assign_computer_operator_tasks.short_description = "Add Computer Operator tasks"
 
 class PersonAdmin(admin.ModelAdmin):
-    actions = [assign_all, assign_unix_tasks, assign_wintel_tasks]
+    actions = [assign_all, assign_unix_tasks, assign_wintel_tasks, assign_computer_operator_tasks]
     readonly_fields = ['addeddate',]
     list_display = ['name', 'shortname', 'capability', 'team', 'cscid']
     list_filter = ['worksite', 'kite', 'employtype', 'capability', 'team']
